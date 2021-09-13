@@ -26,6 +26,11 @@ namespace Tempo_Social_Music
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /* initially had SpotifyConfig as a static, decided to try real injection
+            SpotifyConfig.ClientID = Configuration["Spotify:ClientID"];
+            SpotifyConfig.ClientSecret = Configuration["Spotify:ClientSecret"];
+            */
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -45,6 +50,10 @@ namespace Tempo_Social_Music
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            //Including the SpotifyClientAuth class in the injecting chain
+            services.AddTransient<SpotifyClientAuth>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +90,7 @@ namespace Tempo_Social_Music
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
 
             app.UseSpa(spa =>
             {
