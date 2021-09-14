@@ -51,7 +51,7 @@ namespace Tempo_Social_Music.Models
 
         private bool IsExpiredOrEmpty()
         {
-            return (string.IsNullOrEmpty(_token.access_token)) || (DateTime.UtcNow > ValidTo) || (_token.token_type != "bearer");
+            return (_token is null)||(string.IsNullOrEmpty(_token.access_token)) || (DateTime.UtcNow > ValidTo) || (_token.token_type.ToLower() != "bearer");
         }
     }
 }
