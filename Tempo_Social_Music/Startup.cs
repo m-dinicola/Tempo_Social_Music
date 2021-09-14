@@ -54,6 +54,7 @@ namespace Tempo_Social_Music
             //Including the SpotifyClientAuth class in the injecting chain
             services.AddTransient<SpotifyClientAuth>();
 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

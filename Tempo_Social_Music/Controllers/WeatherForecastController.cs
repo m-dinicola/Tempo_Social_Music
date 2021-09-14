@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tempo_Social_Music.Models;
 
 namespace Tempo_Social_Music.Controllers
 {
@@ -19,9 +20,11 @@ namespace Tempo_Social_Music.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly SpotifyClientAuth _test;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, SpotifyClientAuth test)
         {
+            _test = test;
             _logger = logger;
         }
 

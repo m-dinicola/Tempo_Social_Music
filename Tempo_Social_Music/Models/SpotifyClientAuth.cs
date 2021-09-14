@@ -11,7 +11,7 @@ namespace Tempo_Social_Music.Models
 {
     public class SpotifyClientAuth
     {
-        private SpotifyConfig _keys;
+        private readonly SpotifyConfig _keys;
 
         private BearerToken _token;
 
