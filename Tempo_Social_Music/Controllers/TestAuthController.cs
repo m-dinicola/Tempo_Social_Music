@@ -14,6 +14,7 @@ namespace Tempo_Social_Music.Controllers
     public class TestAuthController : ControllerBase
     {
         private SpotifyClientAuth _test;
+        private BearerToken token;
         public TestAuthController(SpotifyClientAuth testClientAuth)
         {
             _test = testClientAuth;
@@ -22,8 +23,10 @@ namespace Tempo_Social_Music.Controllers
         [HttpGet]
         public string TestAuth()
         {
-            BearerToken token;
-            token = _test.GetTokenAsync().Result;
+            if (token is null)
+            {
+                token = _test.GetTokenAsync().Result;
+            }
             return JsonSerializer.Serialize(token);
         }
     }
