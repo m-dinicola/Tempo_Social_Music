@@ -34,6 +34,11 @@ namespace Tempo_Social_Music
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            
+            //including Tempo_DB from Azure in services, taken from secrets
+            services.AddDbContext<Tempo_DBContext>(options => 
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("TempoDatabase")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
