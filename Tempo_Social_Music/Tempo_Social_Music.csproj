@@ -36,6 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\Connection.ts" />
+    <None Remove="ClientApp\src\app\models\Favorites.ts" />
+    <None Remove="ClientApp\src\app\models\Recommendation.ts" />
     <None Remove="ClientApp\src\app\models\Song.ts" />
     <None Remove="ClientApp\src\app\models\tempoUser.ts" />
   </ItemGroup>
