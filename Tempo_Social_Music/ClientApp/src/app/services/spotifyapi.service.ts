@@ -8,7 +8,7 @@ import { Song } from '../models/song';
 })
 export class SpotifyapiService {
 
-  apiUri: string = "";
+  apiUri: string = "https://api.spotify.com";
 
   constructor(private http: HttpClient) {
 
