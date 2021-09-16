@@ -7,7 +7,7 @@ import { TempoUser } from '../models/TempoUser';
 })
 export class TempoDBAPIService {
 
-  apiUri: string = "";
+  apiUri: string = "https://localhost:44346/api/tempodb";
   newDataAdded = new EventEmitter<string>();
 
   constructor(private http: HttpClient) {
@@ -15,10 +15,19 @@ export class TempoDBAPIService {
     console.log(this.apiUri)
   }
 
+  //Find a user by User Name
   getUserSearch(userName: string) {
     return this.http.get<TempoUser[]>(`${this.apiUri}/getUserSearch/${userName}`);
   }
 
-  
+  //Add a found user. Link this to a button.
+  addUserFriend(userPK: number) {
+    return this.http.post<TempoUser>(`${this.apiUri}/addUserFriend/${userPK}`, { "userPK": userPK });
+  }
+
+  //Delete a user by the user's ID. Called userPK in the database.
+  deleteUserFriend(userPK: number) {
+    return this.http.delete(`${this.apiUri}/deleteUserFriend/${userPK}`);
+  }
 
 }

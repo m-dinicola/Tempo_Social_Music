@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TempoUser } from '../models/TempoUser';
 import { SpotifyapiService } from '../services/spotifyapi.service';
 import { TempoDBAPIService } from '../services/tempo-db-api.service';
@@ -10,21 +11,34 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private tempoDBService: TempoDBAPIService) { }
+  constructor(private tempoDBService: TempoDBAPIService, private spotifyService: SpotifyapiService, route: ActivatedRoute) { }
 
   userSearch: TempoUser[] = [];
+  musicSearch = Artist[];
 
   ngOnInit(): void {
   }
 
-}
 
-getUserList(){
-  this.tempoDBService.getUserList().subscribe(
+  getUserSearch(userName: string) {
+  this.tempoDBService.getUserSearch(userName).subscribe(
     result => {
       this.userSearch = result;
       console.log(this.userSearch);
     },
     error => console.log(error)
   );
+  }
+
+  getMusicSearch(keyword: string) {
+    this.spotifyService.getMusicSearch(keyword).subscribe(
+      result => {
+        this.musicSearch = result;
+        console.log(this.musicSearch);
+      },
+      error => console.log(error)
+    );
+  }
 }
+
+
