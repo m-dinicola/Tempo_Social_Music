@@ -6,12 +6,6 @@
     },
     "secrets1": {
       "type": "secrets.user"
-    },
-    "mssql2": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/temposerver/databases/Tempo_DB",
-      "type": "mssql.azure",
-      "connectionId": "MyConnectionString",
-      "secretStore": "LocalSecretsFile"
     }
   }
 }
