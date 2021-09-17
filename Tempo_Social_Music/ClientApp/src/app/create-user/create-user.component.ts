@@ -27,7 +27,7 @@ export class CreateUserComponent implements OnInit {
 
 
   createUser(newUser: TempoUser) {
-    this.tempoDBService.createUser().subscribe(
+    this.tempoDBService.createUser(newUser).subscribe(
         result => {
           this.newUser = result;
           console.log(this.newUser);

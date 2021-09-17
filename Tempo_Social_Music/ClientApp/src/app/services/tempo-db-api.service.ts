@@ -33,7 +33,7 @@ export class TempoDBAPIService {
   }
 
   //Create a new user. Link this to ngForm.
-  createUser() {
+  createUser(newUser: TempoUser) {
     return this.http.post<TempoUser>(`${this.apiUri}/user`, {});
   }
 }
