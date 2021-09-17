@@ -45,16 +45,31 @@ namespace Tempo_Social_Music.Controllers
 
         #endregion
         #region Create
-        //POST: api/TempoDB/username
+        //POST: api/TempoDB/user
+        //pair progammed by AL & MD
         [HttpPost("user")]
         public async Task<ActionResult<TempoUser>> CreateUser(TempoUser newUser)
         {
-            if (GetUserByName(newUser.LoginName) != null)
+            if (newUser.LoginName is null || GetUserByName(newUser.LoginName) != null || newUser.FirstName is null)
             {
                 return BadRequest();
+                //if required fields are empty or username already exists cannot create new user.
             }
+            _context.TempoUser.Add(newUser);    //add new user to database
+            await _context.SaveChangesAsync();  //save changes to database
+            return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName}, newUser);  
+            //redirect to user page for new user
+
+        }
+
+        //POST: api/TempoDB/addUserFriend
+        //pair progreammed by AL & MD
+        [HttpPost ("addUserFriend/{userString}")]
+        public async Task<ActionResult<TempoUser>> AddConnection(string userString)
+        {
+            List<string> users = userString.Split('&').ToList();
             return NotFound();
         }
-               #endregion
+        #endregion
     }
 }
