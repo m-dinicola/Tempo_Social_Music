@@ -33,16 +33,51 @@ namespace Tempo_Social_Music.Controllers
         }
 
         // GET: api/TempoDB/userID
-        [HttpGet("userID/{id}")]
-        public async Task<ActionResult<TempoUser>> GetUser(int userID) {
-            var getUser = await _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID);
-            if(getUser is null)
+        //[HttpGet("userID/{id}")]
+        //public async Task<ActionResult<TempoUser>> GetUser(int userID) {
+        //    var getUser = await _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID);
+        //    if(getUser is null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return getUser;
+        //}
+
+        #endregion
+        #region Create
+        //POST: api/TempoDB/user
+        //pair progammed by AL & MD
+        [HttpPost("user")]
+        public async Task<ActionResult<TempoUser>> CreateUser(TempoUser newUser)
+        {
+            if (newUser.LoginName is null || GetUserByName(newUser.LoginName) != null || newUser.FirstName is null)
             {
-                return NotFound();
+                return BadRequest();
+                //if required fields are empty or username already exists cannot create new user.
             }
-            return getUser;
+            _context.TempoUser.Add(newUser);    //add new user to database
+            await _context.SaveChangesAsync();  //save changes to database
+            return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName}, newUser);  
+            //redirect to user page for new user
+
         }
 
+        //POST: api/TempoDB/addUserFriend
+        //pair progreammed by AL & MD
+        [HttpPost ("addUserFriend/{userString}")]
+        public async Task<ActionResult<TempoUser>> AddConnection(string userString)
+        {
+            List<string> users = userString.Split('&').ToList();
+            if (users.Count != 2 || _context.TempoUser.Select(x => x.LoginName).Intersect(users).Count() != 2)
+            {
+                return BadRequest();
+            }
+            List<int> usernums = new List<int>();
+            usernums.Add( _context.TempoUser.FirstAsync(x => x.LoginName == users[0]).Result.UserPk);
+            usernums.Add( _context.TempoUser.FirstAsync(x => x.LoginName == users[1]).Result.UserPk);
+            if (_context.Connection.Where(x => usernums.(x.User1, x.User2); 
+            return NotFound();
+        }
         #endregion
     }
 }
