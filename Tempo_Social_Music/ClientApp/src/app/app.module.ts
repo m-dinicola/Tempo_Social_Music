@@ -36,6 +36,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
+      { path: 'create-user', component: CreateUserComponent },
     ])
   ],
   providers: [

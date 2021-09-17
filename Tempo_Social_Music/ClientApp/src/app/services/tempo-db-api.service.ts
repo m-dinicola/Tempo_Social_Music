@@ -26,7 +26,7 @@ export class TempoDBAPIService {
     return this.http.post<TempoUser>(`${this.apiUri}/addUserFriend/${message}`, {});
   }
 
-  //Delete a user by the userName..
+  //Delete a user by the userName.
   deleteUserFriend(user1: string, user2: string) {
     var message = `${user1}&${user2}`
     return this.http.delete(`${this.apiUri}/deleteUserFriend/${message}`);

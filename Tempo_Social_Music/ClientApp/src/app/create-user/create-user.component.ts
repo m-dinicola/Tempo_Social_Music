@@ -25,4 +25,21 @@ export class CreateUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  createUser(newUser: TempoUser) {
+    this.tempoDBService.createUser().subscribe(
+        result => {
+          this.newUser = result;
+          console.log(this.newUser);
+        },
+        error => console.log(error)
+      );
+    }
+
+
+  onSubmit(form: NgForm) {
+    this.newUser = form.form.value;
+    console.log(this.newUser);
+    this.createUser(this.newUser);
+  }
 }
