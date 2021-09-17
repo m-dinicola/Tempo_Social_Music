@@ -68,6 +68,14 @@ namespace Tempo_Social_Music.Controllers
         public async Task<ActionResult<TempoUser>> AddConnection(string userString)
         {
             List<string> users = userString.Split('&').ToList();
+            if (users.Count != 2 || _context.TempoUser.Select(x => x.LoginName).Intersect(users).Count() != 2)
+            {
+                return BadRequest();
+            }
+            List<int> usernums = new List<int>();
+            usernums.Add( _context.TempoUser.FirstAsync(x => x.LoginName == users[0]).Result.UserPk);
+            usernums.Add( _context.TempoUser.FirstAsync(x => x.LoginName == users[1]).Result.UserPk);
+            if (_context.Connection.Where(x => usernums.(x.User1, x.User2); 
             return NotFound();
         }
         #endregion
