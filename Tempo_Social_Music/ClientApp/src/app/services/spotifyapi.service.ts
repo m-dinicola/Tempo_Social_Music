@@ -8,7 +8,7 @@ import { Song } from '../models/song';
 })
 export class SpotifyapiService {
 
-  apiUri: string = "https://api.spotify.com";
+  apiUri: string = "https://localhost:44436/api.spotify";
 
   constructor(private http: HttpClient) {
 
@@ -16,17 +16,22 @@ export class SpotifyapiService {
   }
 
   //Find music by artist
-  getArtistSearch(artistName: string) {
-    return this.http.get<Artists[]>(`${this.apiUri}/getArtistSearch/${artistName}`);
+  getArtistByName(artistName: string) {
+    return this.http.get<Artists>(`${this.apiUri}/getArtistByName/${artistName}`);
   }
 
   //Find music by song
-  getSongSearch(songName: string) {
-    return this.http.get<Song>(`${this.apiUri}/getSongSearch/${songName}`);
+  getSongByName(songName: string) {
+    return this.http.get<Song>(`${this.apiUri}/getSongByName/${songName}`);
   }
 
-  //Add an artist to favorites list
-  addArtistFavorite(artistId: Artists) {
-    return this.http.post<Artists>(`${this.apiUri}/addArtistFavorite/${artistId}`, { "artistId": artistId.artistId });
+  //Find an arist by an ID
+  getArtistById(artistId: string) {
+    return this.http.get<Artists>(`${this.apiUri}/getArtistById/${artistId}`);
+  }
+
+  //Find a song by an ID
+  getSongById(songId: string) {
+    return this.http.get<Song>(`${this.apiUri}/getSongById/${songId}`);
   }
 }
