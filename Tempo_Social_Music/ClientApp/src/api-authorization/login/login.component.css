@@ -1,0 +1,30 @@
+
+
+body
+{
+ background-image: linear-gradient(to bottom right, rgb(135, 238, 135), rgb(111, 179, 247));
+ text-align: center;
+}
+
+.header
+{
+ background-color: rgb(150, 158, 167);
+ text-align: center;
+
+}
+
+h1
+{
+ color: darkgreen;
+ text-shadow: 2px 2px 5px darkslategray;
+ text-size-adjust: large;
+}
+
+p{
+  color:darkgreen;
+}
+
+button{
+  color: navy;
+  background-color:lightblue;
+}
