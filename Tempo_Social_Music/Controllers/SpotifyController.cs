@@ -22,8 +22,20 @@ namespace Tempo_Social_Music.Controllers
 
         }
 
+        //GET: /getSongByName/{songName}
+        //by M
+        [HttpGet("getSongByName/{songName}")]
+        public async Task<ActionResult<string>> GetSongByName(string songName)
+        {
+            string query = "q=name:" + songName.Replace(" ", "%20") + "&type=track&limit=1";
+            HttpClient http = _DAL.GetHttpClient();
+            http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token.GetTokenAsync().Result.access_token}");
+            var request = await http.GetAsync($"search{query}");
+            return await request.Content.ReadAsStringAsync();
+        }
 
         //GET: /getsongbyID/{songId}
+        //pair programmed AL and M
         [HttpGet("getsongbyId/{songId}")]
         public async Task<ActionResult<string>> GetSongById(string songId)
         {
@@ -36,6 +48,7 @@ namespace Tempo_Social_Music.Controllers
         }
 
         //GET: /getartistbyID/{artistId}
+        //by AL
         [HttpGet("getartistbyId/{artistId}")]
         public async Task<ActionResult<string>> GetArtistById(string artistId)
         {
