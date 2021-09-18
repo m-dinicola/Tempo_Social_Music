@@ -80,30 +80,30 @@ namespace Tempo_Social_Music.Controllers
 
         //POST: api/TempoDB/addUserFriend
         //pair progreammed by AL & MD
-        [HttpPost("addUserFriend/{userString}")] //Commented out due to build error. Needs to be fixed please.
-        public async Task<ActionResult<Connection>> AddConnection(string userString)
+        [HttpPost("addUserFriend/{userString}")] //user string is of the form $"{Username1}&{Username2}"
+        public async Task<ActionResult<List<Connection>>> AddConnection(string userString)
         {
-            List<string> users = userString.Split('&').ToList();
-            if (users.Count != 2 || _context.TempoUser.Select(x => x.LoginName).Intersect(users).Count() != 2)
+            Connection newConnection;
+            try
+            {
+                newConnection = ParseConnectionUserString(userString);
+            }
+            catch (IndexOutOfRangeException)
             {
                 return BadRequest();
             }
-            
-            Connection newConnection = new Connection();
-            newConnection.MatchValue = 1;
-            newConnection.User1 = _context.TempoUser.FirstAsync(x => x.LoginName == users[0]).Result.UserPk;
-            newConnection.User2 = _context.TempoUser.FirstAsync(x => x.LoginName == users[1]).Result.UserPk;
+            //see if table already contains match for these users
+            Connection oldConnection = await PreexistingConnectionAsync(newConnection);
 
-            Connection oldConnection = await _context.Connection.FirstOrDefaultAsync(x =>
-                (x.User1 == newConnection.User1 && x.User2 == newConnection.User2) ||
-                (x.User1 == newConnection.User2 && x.User2 == newConnection.User1)
-                );
+            //add new connection to DB if it doesn't already exist, return Created ActionResult
             if (oldConnection is null)
             {
                 _context.Connection.Add(newConnection);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction(nameof(GetConnections), new { userPK = newConnection.User1}, newConnection);
             }
+
+            //if connection already exists, just return OK actionresult.
             return Ok(oldConnection);
         }
 
@@ -111,7 +111,61 @@ namespace Tempo_Social_Music.Controllers
         #region Delete
         //DELETE: api/tempoDB/deleteUserFriend/{userString}
         //pair programmed by M and AL
+        [HttpDelete("deleteUserFriend/{userString}")]
+        public async Task<ActionResult<List<Connection>>> deleteConnection(string userString)
+        {
+            Connection connection;
+            try
+            {
+                connection = ParseConnectionUserString(userString);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return BadRequest();
+            }
 
+            Connection oldConnection = await PreexistingConnectionAsync(connection);
+            if(oldConnection is null)
+            {
+                return Ok();
+            }
+
+            _context.Connection.Remove(oldConnection);
+            await _context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
+        private Connection ParseConnectionUserString(string userString)
+        {
+            //parse userString into usernames
+            List<string> users = userString.Split('&').ToList();
+
+            //test to ensure 2 users were passed
+            if (users.Count != 2 || _context.TempoUser.Select(x => x.LoginName).Intersect(users).Count() != 2)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            //build a connection from two usernames
+            Connection newConnection = new Connection();
+            newConnection.MatchValue = 1;
+            //search table of users for user with username to extract userPK
+            newConnection.User1 = _context.TempoUser.FirstAsync(x => x.LoginName == users[0]).Result.UserPk;
+            newConnection.User2 = _context.TempoUser.FirstAsync(x => x.LoginName == users[1]).Result.UserPk;
+
+            return newConnection;
+        }
+
+        private async Task<Connection> PreexistingConnectionAsync(Connection connection)
+        {
+            //see if table already contains match for these users
+            Connection oldConnection = await _context.Connection.FirstOrDefaultAsync(x =>
+                (x.User1 == connection.User1 && x.User2 == connection.User2) ||
+                (x.User1 == connection.User2 && x.User2 == connection.User1)
+                );
+            return oldConnection;
+        }
 
         #endregion
     }
