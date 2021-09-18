@@ -55,8 +55,9 @@ namespace Tempo_Social_Music.Controllers
             HttpClient http = _DAL.GetHttpClient();
             http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token.GetTokenAsync().Result.access_token}");
 
-            var reqeust = await http.GetAsync($"tracks/{artistId}");
-            var response 
+            var request = await http.GetAsync($"artists/{artistId}");
+            var response = await request.Content.ReadAsStringAsync();
+            return response;
 
         }
     }
