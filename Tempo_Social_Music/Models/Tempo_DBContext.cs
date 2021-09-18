@@ -10,7 +10,7 @@ namespace Tempo_Social_Music.Models
 {
     public partial class Tempo_DBContext : DbContext
     {
-        private readonly string _connection;
+        //private readonly string _connection;
         public Tempo_DBContext()
         {
         }
