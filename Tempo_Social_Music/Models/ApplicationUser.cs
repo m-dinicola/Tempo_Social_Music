@@ -8,5 +8,6 @@ namespace Tempo_Social_Music.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
     }
 }

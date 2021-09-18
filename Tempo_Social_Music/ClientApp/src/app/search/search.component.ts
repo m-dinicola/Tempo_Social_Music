@@ -18,15 +18,15 @@ export class SearchComponent implements OnInit {
 
   keyword: string;
   userSearch: TempoUser[] = [];
-  artistSearch: Artists[] = [];
+  artistSearch: Artists;
   songSearch: Song;
 
   ngOnInit(): void {
   }
 
   //Find a user by user name
-  getUserSearch(userName: string) {
-  this.tempoDBService.getUserSearch(userName).subscribe(
+  getUserByName(userName: string) {
+  this.tempoDBService.getUserByName(userName).subscribe(
     result => {
       this.userSearch = result;
       console.log(this.userSearch);
@@ -36,8 +36,8 @@ export class SearchComponent implements OnInit {
   }
 
   //Find an artist/band by a keyword
-  getArtistSearch(keyword: string) {
-    this.spotifyService.getArtistSearch(keyword).subscribe(
+  getArtistByName(keyword: string) {
+    this.spotifyService.getArtistByName(keyword).subscribe(
       result => {
         this.artistSearch = result;
         console.log(this.artistSearch);
@@ -47,8 +47,8 @@ export class SearchComponent implements OnInit {
   }
 
   //Find a song by a keyword
-  getSongSearch(keyword: string) {
-    this.spotifyService.getSongSearch(keyword).subscribe(
+  getSongByName(keyword: string) {
+    this.spotifyService.getSongByName(keyword).subscribe(
       result => {
         this.songSearch = result;
         console.log(this.songSearch);
@@ -62,7 +62,7 @@ export class SearchComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.keyword = form.form.value;
     console.log(this.keyword);
-    this.getUserSearch(this.keyword);
+    this.getUserByName(this.keyword);
   }
 }
 
