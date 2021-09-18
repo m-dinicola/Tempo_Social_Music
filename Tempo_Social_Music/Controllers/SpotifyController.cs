@@ -23,7 +23,7 @@ namespace Tempo_Social_Music.Controllers
         }
 
 
-        //GET: /getsongbyID/{songId)
+        //GET: /getsongbyID/{songId}
         [HttpGet("getsongbyId/{songId}")]
         public async Task<ActionResult<string>> GetSongById(string songId)
         {
@@ -35,5 +35,16 @@ namespace Tempo_Social_Music.Controllers
             return response;
         }
 
+        //GET: /getartistbyID/{artistId}
+        [HttpGet("getartistbyId/{artistId}")]
+        public async Task<ActionResult<string>> GetArtistById(string artistId)
+        {
+            HttpClient http = _DAL.GetHttpClient();
+            http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token.GetTokenAsync().Result.access_token}");
+
+            var reqeust = await http.GetAsync($"tracks/{artistId}");
+            var response 
+
+        }
     }
 }
