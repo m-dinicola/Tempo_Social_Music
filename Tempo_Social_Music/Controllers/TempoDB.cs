@@ -50,10 +50,17 @@ namespace Tempo_Social_Music.Controllers
         [HttpPost("user")]
         public async Task<ActionResult<TempoUser>> CreateUser(TempoUser newUser)
         {
-            if (newUser.LoginName is null || GetUserByName(newUser.LoginName) != null || newUser.FirstName is null)
+            try
             {
-                return BadRequest();
-                //if required fields are empty or username already exists cannot create new user.
+                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName) || string.IsNullOrEmpty(newUser.LoginName) || string.IsNullOrEmpty(newUser.FirstName))
+                {
+                    return BadRequest();
+                    //if required fields are empty or username already exists cannot create new user.
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                return BadRequest(e);
             }
             _context.TempoUser.Add(newUser);    //add new user to database
             await _context.SaveChangesAsync();  //save changes to database
