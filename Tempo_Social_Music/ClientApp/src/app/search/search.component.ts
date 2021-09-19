@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TempoUser } from '../models/TempoUser';
 import { Artists } from '../models/Artists';
 import { SpotifyapiService } from '../services/spotifyapi.service';
 import { TempoDBAPIService } from '../services/tempo-db-api.service';
 import { Song } from '../models/Song';
 import { NgForm } from '@angular/forms';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +14,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private router:Router, private tempoDBService: TempoDBAPIService, private spotifyService: SpotifyapiService, private route: ActivatedRoute) { }
+  constructor(private tempoDBService: TempoDBAPIService, private spotifyService: SpotifyapiService, route: ActivatedRoute) { }
 
   keyword: string;
   userSearch: TempoUser[] = [];
@@ -47,16 +47,14 @@ export class SearchComponent implements OnInit {
   }
 
   //Find a song by a keyword
-  getSongByName(keyword: string): Song {
+  getSongByName(keyword: string) {
     this.spotifyService.getSongByName(keyword).subscribe(
       result => {
         this.songSearch = result;
         console.log(this.songSearch);
-        
       },
       error => console.log(error)
     );
-    return this.songSearch;
   }
 
   //This will utilize the search form. It will take in a string "keyword" and seach
@@ -65,8 +63,6 @@ export class SearchComponent implements OnInit {
     this.keyword = form.form.value;
     console.log(this.keyword);
     this.getUserByName(this.keyword);
-    this.router.navigate(['/create-user'])
-
   }
 }
 
