@@ -34,14 +34,14 @@ namespace Tempo_Social_Music.Controllers
 
         // GET: api/TempoDB/userID
         [HttpGet("userID/{id}")]
-        public async Task<ActionResult<TempoUser>> GetUser(int userID)
+        public ActionResult<TempoUser> GetUser(int userID)
         {
-            var getUser = await _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID);
+            var getUser = _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID).Result;
             if (getUser is null)
             {
                 return NotFound();
             }
-            return getUser;
+            return Ok(getUser);
         }
 
         // GET: api/TempoDB/Jams/{userPK}
