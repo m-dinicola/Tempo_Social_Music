@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Artists } from '../models/Artists';
+import { Favorites } from '../models/Favorites';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,15 @@ export class FavoritesService {
     console.log(this.apiUri);
   }
 
+  //get favorites tempodb/jams/userPK
+
   //Add an artist to favorites list
-  addArtistFavorite(artistId: Artists) {
-    return this.http.post<Artists>(`${this.apiUri}/addArtistFavorite/${artistId}`, { "artistId": artistId.artistId });
+  addArtistFavorite(newFav: Favorites) {
+    return this.http.post<Favorites[]>(`${this.apiUri}/addjam/` , newFav);
   }
 
   //Delete an artist from your favorites list based on the artists ID.
-  deleteArtistFavorite(artistId: string) {
-    this.http.delete(`${this.apiUri}/addArtistFavorite/${artistId}`);
+  deleteArtistFavorite(favorite: string) {
+    this.http.delete(`${this.apiUri}/deleteJam/${favorite}`);
   }
 }
