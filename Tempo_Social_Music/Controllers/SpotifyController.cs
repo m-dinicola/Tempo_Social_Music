@@ -28,7 +28,7 @@ namespace Tempo_Social_Music.Controllers
         [HttpGet("getSongByName/{songName}")]
         public async Task<ActionResult<string>> GetSongByName(string songName)
         {
-            string query = "?q=" + songName.Replace(" ", "%20") + "&type=track";
+            string query = "?q=" + songName + "&type=track";
             HttpClient http = _DAL.GetHttpClient();
             http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token.GetTokenAsync().Result.access_token}");
             var request = await http.GetAsync($"search{query}");

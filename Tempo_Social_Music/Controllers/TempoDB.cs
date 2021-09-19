@@ -33,23 +33,32 @@ namespace Tempo_Social_Music.Controllers
         }
 
         // GET: api/TempoDB/userID
-        //[HttpGet("userID/{id}")]
-        //public async Task<ActionResult<TempoUser>> GetUser(int userID) {
-        //    var getUser = await _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID);
-        //    if(getUser is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return getUser;
-        //}
+        [HttpGet("userID/{id}")]
+        public ActionResult<TempoUser> GetUser(int userID)
+        {
+            var getUser = _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID).Result;
+            if (getUser is null)
+            {
+                return NotFound();
+            }
+            return Ok(getUser);
+        }
+
+        // GET: api/TempoDB/Jams/{userPK}
+        // by M
+        [HttpGet("Jams/{userPK}")]
+        public async Task<List<Favorites>> GetFavoritesAsync(int userPK)
+        {
+            return await _context.Favorites.Where(x => x.UserId == userPK).OrderBy(x => x.SpotArtist).ToListAsync();
+        }
 
         // GET: api/TempoDB/Connections/{userPK}
         // pair programmed by M & AL
         [HttpGet("connections/{userPK}")]
-        public List<Connection> GetConnections(int userPK)
+        public async Task<List<Connection>> GetConnectionsAsync(int userPK)
         {
             //return filtered table of connections which have userPK as User1 or User2 from tempoDB.Connection table
-            return _context.Connection.Where(x => x.User1 == userPK || x.User2 == userPK).ToList();
+            return await _context.Connection.Where(x => x.User1 == userPK || x.User2 == userPK).OrderByDescending(x=>x.MatchValue).ToListAsync();
         }
 
         #endregion
@@ -100,12 +109,35 @@ namespace Tempo_Social_Music.Controllers
             {
                 _context.Connection.Add(newConnection);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetConnections), new { userPK = newConnection.User1}, newConnection);
+                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1}, newConnection);
             }
 
             //if connection already exists, just return OK actionresult.
             return Ok(oldConnection);
         }
+
+        // POST: api/tempoDB/addFavorite
+        // by M
+        [HttpPost("addJam")]
+        public async Task<ActionResult<Favorites>> AddJam(Favorites newFave)
+        {
+            Favorites oldFave = PreexistingFavoriteAsync(newFave).Result;
+            if(oldFave != null)
+            {
+                return Ok(oldFave);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _context.Favorites.Add(newFave);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetFavoritesAsync), new { userPK = newFave.UserId }, newFave);
+            
+        }
+
 
         #endregion
         #region Delete
@@ -135,7 +167,8 @@ namespace Tempo_Social_Music.Controllers
             return NoContent();
 
         }
-
+        #endregion
+        #region Support fxs
         private Connection ParseConnectionUserString(string userString)
         {
             //parse userString into usernames
@@ -167,6 +200,14 @@ namespace Tempo_Social_Music.Controllers
             return oldConnection;
         }
 
+        private async Task<Favorites> PreexistingFavoriteAsync(Favorites favorite)
+        {
+            //see if table already contains match for these users
+            Favorites oldFavorite = await _context.Favorites.FirstOrDefaultAsync(x =>
+                (x.UserId == favorite.UserId && x.SpotArtist == favorite.SpotArtist && x.SpotTrack == favorite.SpotTrack)
+                );
+            return oldFavorite;
+        }
         #endregion
     }
 }
