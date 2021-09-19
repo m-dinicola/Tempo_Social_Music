@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TempoUser } from '../models/TempoUser';
 import { TempoDBAPIService } from '../services/tempo-db-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-user',
@@ -17,7 +19,7 @@ export class CreateUserComponent implements OnInit {
   input: string;
   newUser: TempoUser = { UserPk: 0, LoginName: '', FirstName: '', LastName: '', StreetAddress: '', State: '', ZipCode: '', UserBio: '' };
   userList: TempoUser[] = [];
-  constructor(private http: HttpClient, private tempoDBService: TempoDBAPIService) {
+  constructor(private http: HttpClient, private tempoDBService: TempoDBAPIService, private router: Router) {
 
     console.log(this.apiUri)
   }
