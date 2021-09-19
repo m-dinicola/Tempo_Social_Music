@@ -13,5 +13,7 @@ namespace Tempo_Social_Music.Models
         public int UserId { get; set; }
         public string SpotTrack { get; set; }
         public string SpotArtist { get; set; }
+
+        public virtual TempoUser User { get; set; }
     }
 }

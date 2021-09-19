@@ -10,7 +10,6 @@ namespace Tempo_Social_Music.Models
 {
     public partial class Tempo_DBContext : DbContext
     {
-        //private readonly string _connection;
         public Tempo_DBContext()
         {
         }
@@ -29,7 +28,6 @@ namespace Tempo_Social_Music.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
             }
         }
 
@@ -37,11 +35,19 @@ namespace Tempo_Social_Music.Models
         {
             modelBuilder.Entity<Connection>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.ConnectionId).HasColumnName("ConnectionID");
 
-                entity.Property(e => e.ConnectionId)
-                    .HasColumnName("ConnectionID")
-                    .ValueGeneratedOnAdd();
+                entity.HasOne(d => d.User1Navigation)
+                    .WithMany(p => p.ConnectionUser1Navigation)
+                    .HasForeignKey(d => d.User1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Connectio__User1__6EF57B66");
+
+                entity.HasOne(d => d.User2Navigation)
+                    .WithMany(p => p.ConnectionUser2Navigation)
+                    .HasForeignKey(d => d.User2)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Connectio__User2__6FE99F9F");
             });
 
             modelBuilder.Entity<Favorites>(entity =>
@@ -58,6 +64,12 @@ namespace Tempo_Social_Music.Models
                     .HasMaxLength(200);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Favorites__UserI__70DDC3D8");
             });
 
             modelBuilder.Entity<Recommendation>(entity =>
@@ -65,6 +77,18 @@ namespace Tempo_Social_Music.Models
                 entity.Property(e => e.RecommendationId).HasColumnName("RecommendationID");
 
                 entity.Property(e => e.RecSongId).HasColumnName("RecSongID");
+
+                entity.HasOne(d => d.UserFromNavigation)
+                    .WithMany(p => p.RecommendationUserFromNavigation)
+                    .HasForeignKey(d => d.UserFrom)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Recommend__UserF__72C60C4A");
+
+                entity.HasOne(d => d.UserToNavigation)
+                    .WithMany(p => p.RecommendationUserToNavigation)
+                    .HasForeignKey(d => d.UserTo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Recommend__UserT__73BA3083");
             });
 
             modelBuilder.Entity<TempoUser>(entity =>

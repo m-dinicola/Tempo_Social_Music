@@ -33,7 +33,7 @@ namespace Tempo_Social_Music.Controllers
         }
 
         // GET: api/TempoDB/userID
-        [HttpGet("userID/{id}")]
+        [HttpGet("userID/{userID}")]
         public ActionResult<TempoUser> GetUser(int userID)
         {
             var getUser = _context.TempoUser.FirstOrDefaultAsync(x => x.UserPk == userID).Result;
@@ -47,18 +47,24 @@ namespace Tempo_Social_Music.Controllers
         // GET: api/TempoDB/Jams/{userPK}
         // by M
         [HttpGet("Jams/{userPK}")]
-        public async Task<List<Favorites>> GetFavoritesAsync(int userPK)
+        public async Task<List<FrontEndFavorite>> GetFavoritesAsync(int userPK)
         {
-            return await _context.Favorites.Where(x => x.UserId == userPK).OrderBy(x => x.SpotArtist).ToListAsync();
+            var awaiter = await _context.Favorites.Where(x => x.UserId == userPK).OrderBy(x => x.SpotArtist).ToListAsync();
+            var output = new List<FrontEndFavorite>();
+            awaiter.ForEach(x => output.Add(new FrontEndFavorite(x)));
+            return output;
         }
 
         // GET: api/TempoDB/Connections/{userPK}
         // pair programmed by M & AL
         [HttpGet("connections/{userPK}")]
-        public async Task<List<Connection>> GetConnectionsAsync(int userPK)
+        public async Task<List<FrontEndConnection>> GetConnectionsAsync(int userPK)
         {
             //return filtered table of connections which have userPK as User1 or User2 from tempoDB.Connection table
-            return await _context.Connection.Where(x => x.User1 == userPK || x.User2 == userPK).OrderByDescending(x=>x.MatchValue).ToListAsync();
+            var awaiter = await _context.Connection.Where(x => x.User1 == userPK || x.User2 == userPK).OrderByDescending(x=>x.MatchValue).ToListAsync();
+            var output = new List<FrontEndConnection>();
+            awaiter.ForEach(x => output.Add(new FrontEndConnection(x)));
+            return output;
         }
 
         #endregion
@@ -90,7 +96,7 @@ namespace Tempo_Social_Music.Controllers
         //POST: api/TempoDB/addUserFriend
         //pair progreammed by AL & MD
         [HttpPost("addUserFriend/{userString}")] //user string is of the form $"{Username1}&{Username2}"
-        public async Task<ActionResult<List<Connection>>> AddConnection(string userString)
+        public async Task<ActionResult<List<FrontEndConnection>>> AddConnection(string userString)
         {
             Connection newConnection;
             try
@@ -109,22 +115,22 @@ namespace Tempo_Social_Music.Controllers
             {
                 _context.Connection.Add(newConnection);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1}, newConnection);
+                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1}, new FrontEndConnection(newConnection));
             }
 
             //if connection already exists, just return OK actionresult.
-            return Ok(oldConnection);
+            return Ok(new FrontEndConnection(oldConnection));
         }
 
-        // POST: api/tempoDB/addFavorite
+        // POST: api/tempoDB/Jams
         // by M
-        [HttpPost("addJam")]
+        [HttpPost("Jams")]
         public async Task<ActionResult<Favorites>> AddJam(Favorites newFave)
         {
             Favorites oldFave = PreexistingFavoriteAsync(newFave).Result;
             if(oldFave != null)
             {
-                return Ok(oldFave);
+                return Ok(new FrontEndFavorite(oldFave));
             }
 
             if (!ModelState.IsValid)
@@ -134,7 +140,7 @@ namespace Tempo_Social_Music.Controllers
 
             _context.Favorites.Add(newFave);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetFavoritesAsync), new { userPK = newFave.UserId }, newFave);
+            return CreatedAtAction(nameof(GetFavoritesAsync), new { userPK = newFave.UserId }, new FrontEndFavorite(newFave));
             
         }
 
@@ -144,7 +150,7 @@ namespace Tempo_Social_Music.Controllers
         //DELETE: api/tempoDB/deleteUserFriend/{userString}
         //pair programmed by M and AL
         [HttpDelete("deleteUserFriend/{userString}")]
-        public async Task<ActionResult<List<Connection>>> deleteConnection(string userString)
+        public async Task<ActionResult> DeleteConnection(string userString)
         {
             Connection connection;
             try
@@ -167,6 +173,24 @@ namespace Tempo_Social_Music.Controllers
             return NoContent();
 
         }
+
+        //DELETE: api/tempoDB/Jams/
+        //by M
+        [HttpDelete("Jams/{jam}")]
+        public async Task<ActionResult> DeleteJamAsync(int jam)
+        {
+            Favorites oldJam = await _context.Favorites.FindAsync(jam);
+            if(oldJam is null)
+            {
+                return Ok();
+            }
+
+            _context.Favorites.Remove(oldJam);
+            await _context.SaveChangesAsync();
+            return NoContent();
+
+        }
+
         #endregion
         #region Support fxs
         private Connection ParseConnectionUserString(string userString)
@@ -175,7 +199,7 @@ namespace Tempo_Social_Music.Controllers
             List<string> users = userString.Split('&').ToList();
 
             //test to ensure 2 users were passed
-            if (users.Count != 2 || _context.TempoUser.Select(x => x.LoginName).Intersect(users).Count() != 2)
+            if (users.Count != 2 || users.Intersect(_context.TempoUser.Select(x => x.LoginName)).Count() != 2)
             {
                 throw new IndexOutOfRangeException();
             }

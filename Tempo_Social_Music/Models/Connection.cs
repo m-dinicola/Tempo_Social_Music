@@ -13,5 +13,8 @@ namespace Tempo_Social_Music.Models
         public int MatchValue { get; set; }
         public int User1 { get; set; }
         public int User2 { get; set; }
+
+        public virtual TempoUser User1Navigation { get; set; }
+        public virtual TempoUser User2Navigation { get; set; }
     }
 }

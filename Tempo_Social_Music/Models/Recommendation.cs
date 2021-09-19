@@ -13,5 +13,8 @@ namespace Tempo_Social_Music.Models
         public int UserFrom { get; set; }
         public int RecSongId { get; set; }
         public int UserTo { get; set; }
+
+        public virtual TempoUser UserFromNavigation { get; set; }
+        public virtual TempoUser UserToNavigation { get; set; }
     }
 }
