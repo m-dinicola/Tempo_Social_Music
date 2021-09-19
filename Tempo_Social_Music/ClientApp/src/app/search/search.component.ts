@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TempoUser } from '../models/TempoUser';
 import { Artists } from '../models/Artists';
 import { SpotifyapiService } from '../services/spotifyapi.service';
@@ -16,15 +16,17 @@ export class SearchComponent implements OnInit {
 
   constructor(private router:Router, private tempoDBService: TempoDBAPIService, private spotifyService: SpotifyapiService, private route: ActivatedRoute) { }
 
-  keyword: string;
+  songTitle: string;
   userSearch: TempoUser[] = [];
   artistSearch: Artists;
   songSearch: Song;
 
-  ngOnInit(): void {
+  ngOnInit() {
+    /*console.log(this.songTitle*/);
   }
 
   //Find a user by user name
+  //KS
   getUserByName(userName: string) {
   this.tempoDBService.getUserByName(userName).subscribe(
     result => {
@@ -36,6 +38,7 @@ export class SearchComponent implements OnInit {
   }
 
   //Find an artist/band by a keyword
+  //KS
   getArtistByName(keyword: string) {
     this.spotifyService.getArtistByName(keyword).subscribe(
       result => {
@@ -47,6 +50,7 @@ export class SearchComponent implements OnInit {
   }
 
   //Find a song by a keyword
+  //KS
   getSongByName(keyword: string): Song {
     this.spotifyService.getSongByName(keyword).subscribe(
       result => {
@@ -61,10 +65,11 @@ export class SearchComponent implements OnInit {
 
   //This will utilize the search form. It will take in a string "keyword" and seach
   //for that keyword when the search button is clicked.
+  //KS
   onSubmit(form: NgForm) {
-    this.keyword = form.form.value;
-    console.log(this.keyword);
-    this.getUserByName(this.keyword);
+    this.songTitle = form.form.value;
+    console.log(this.songTitle);
+    this.getUserByName(this.songTitle);
     this.router.navigate(['/create-user'])
 
   }

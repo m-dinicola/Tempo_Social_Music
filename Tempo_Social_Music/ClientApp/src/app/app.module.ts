@@ -15,6 +15,7 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { SearchComponent } from './search/search.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SongComponent } from './song/song.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ProfileComponent } from './profile/profile.component';
     SearchComponent,
     CreateUserComponent,
     ProfileComponent,
+    SongComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
