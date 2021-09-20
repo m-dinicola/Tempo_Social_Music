@@ -15,7 +15,7 @@ export class CreateUserComponent implements OnInit {
   newDataAdded = new EventEmitter<string>();
 
   input: string;
-  newUser: TempoUser = { UserPk: 0, LoginName: '', FirstName: '', LastName: '', StreetAddress: '', State: '', ZipCode: '', UserBio: '' };
+  newUser: TempoUser = { userPk: 0, loginName: '', firstName: '', lastName: '', streetAddress: '', state: '', zipCode: '', userBio: '' };
   userList: TempoUser[] = [];
   constructor(private http: HttpClient, private tempoDBService: TempoDBAPIService) {
 

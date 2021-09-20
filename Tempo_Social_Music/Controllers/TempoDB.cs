@@ -23,13 +23,13 @@ namespace Tempo_Social_Music.Controllers
         #region Read
         // GET: api/TempoDB/username
         [HttpGet("username/{username}")]
-        public async Task<ActionResult<TempoUser>> GetUserByName(string username) {
+        public async Task<ActionResult<FrontEndUser>> GetUserByName(string username) {
             var getUser = await _context.TempoUser.FirstAsync(x => x.LoginName.ToLower() == username.ToLower());
             if (getUser is null)
             {
                 return NotFound();
             }
-            return getUser;
+            return new FrontEndUser(getUser);
         }
 
         // GET: api/TempoDB/userID

@@ -17,7 +17,7 @@ export class TempoDBAPIService {
 
   //Find a user by userName
   getUserByName(userName: string) {
-    return this.http.get<TempoUser[]>(`${this.apiUri}/username/${userName}`);
+    return this.http.get<TempoUser>(`${this.apiUri}/username/${userName}`);
   }
 
   //Add a found user. Link this to a button.

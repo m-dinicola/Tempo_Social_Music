@@ -17,3 +17,13 @@
 
   <app-song [song]="songSearch">   </app-song>
 </div>
+
+<div *ngIf="artistSearch">
+
+  <app-artist [artist]="artistSearch">   </app-artist>
+</div>
+
+<div *ngIf="userSearch">
+
+  <app-tempo-user [tempouser]="userSearch">   </app-tempo-user>
+</div>

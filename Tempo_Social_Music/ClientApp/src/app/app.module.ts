@@ -15,6 +15,8 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { SearchComponent } from './search/search.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { SongComponent } from './song/song.component';
+import { ArtistComponent } from './artist/artist.component';
+import { TempoUserComponent } from './tempo-user/tempo-user.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { SongComponent } from './song/song.component';
     FetchDataComponent,
     SearchComponent,
     CreateUserComponent,
-    SongComponent
+    SongComponent,
+    ArtistComponent,
+    TempoUserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

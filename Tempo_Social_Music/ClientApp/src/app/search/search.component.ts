@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
   constructor(private tempoDBService: TempoDBAPIService, private spotifyService: SpotifyapiService, route: ActivatedRoute) { }
 
   songTitle: string;
-  userSearch: TempoUser[] = [];
+  userSearch: TempoUser;
   artistSearch: Artists;
   songSearch: Song;
 

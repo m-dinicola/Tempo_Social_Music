@@ -1,10 +1,10 @@
 export interface TempoUser {
-  UserPk: number;
-  LoginName: string;
-  FirstName: string;
-  LastName: string;
-  StreetAddress: string;
-  State: string;
-  ZipCode: string;
-  UserBio: string;
+  userPk: number;
+  loginName: string;
+  firstName: string;
+  lastName: string;
+  streetAddress: string;
+  state: string;
+  zipCode: string;
+  userBio: string;
 }
