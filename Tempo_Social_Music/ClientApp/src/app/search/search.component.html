@@ -1,6 +1,19 @@
 <form class="search-form" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
-
-  Search by: <input class="search-input" name="search" ngModel />
+  <div class="dropMenu">
+    <label for="category">Select</label>
+    <select id="category" name="category" ngModel class="dropMenu">
+      Search by:
+      <option value="1">Song</option>
+      <option value="2">Artist</option>
+      <option value="3">User</option>
+    </select>
+  </div>
+  <input class="search-input" name="search" ngModel />
 
   <button class="btn-search">Search</button>
 </form>
+
+<div *ngIf="songSearch">
+
+  <app-song [song]="songSearch">   </app-song>
+</div>

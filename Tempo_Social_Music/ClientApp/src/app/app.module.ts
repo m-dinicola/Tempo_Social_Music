@@ -14,6 +14,7 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { SearchComponent } from './search/search.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { SongComponent } from './song/song.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
     CounterComponent,
     FetchDataComponent,
     SearchComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    SongComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

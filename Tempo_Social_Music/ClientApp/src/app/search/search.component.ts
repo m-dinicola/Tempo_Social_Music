@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
 
   constructor(private tempoDBService: TempoDBAPIService, private spotifyService: SpotifyapiService, route: ActivatedRoute) { }
 
-  keyword: string;
+  songTitle: string;
   userSearch: TempoUser[] = [];
   artistSearch: Artists;
   songSearch: Song;
@@ -26,13 +26,13 @@ export class SearchComponent implements OnInit {
 
   //Find a user by user name
   getUserByName(userName: string) {
-  this.tempoDBService.getUserByName(userName).subscribe(
-    result => {
-      this.userSearch = result;
-      console.log(this.userSearch);
-    },
-    error => console.log(error)
-  );
+    this.tempoDBService.getUserByName(userName).subscribe(
+      result => {
+        this.userSearch = result;
+        console.log(this.userSearch);
+      },
+      error => console.log(error)
+    );
   }
 
   //Find an artist/band by a keyword
@@ -47,8 +47,8 @@ export class SearchComponent implements OnInit {
   }
 
   //Find a song by a keyword
-  getSongByName(keyword: string) {
-    this.spotifyService.getSongByName(keyword).subscribe(
+  getSongByName(songName: string) {
+    this.spotifyService.getSongByName(songName).subscribe(
       result => {
         this.songSearch = result;
         console.log(this.songSearch);
@@ -60,10 +60,26 @@ export class SearchComponent implements OnInit {
   //This will utilize the search form. It will take in a string "keyword" and seach
   //for that keyword when the search button is clicked.
   onSubmit(form: NgForm) {
-    this.keyword = form.form.value;
-    console.log(this.keyword);
-    this.getUserByName(this.keyword);
+    this.songSearch = null;
+    this.artistSearch = null;
+    this.userSearch = null;
+
+    this.songTitle = form.form.value.search;
+    console.log(this.songTitle);
+
+    if (form.form.value.category == 1) {
+      this.getSongByName(this.songTitle);
+    }
+
+    else if (form.form.value.category == 2) {
+      this.getArtistByName(this.songTitle);
+    }
+
+    else {
+      this.getUserByName(this.songTitle);
+    }
+
+
   }
 }
-
 
