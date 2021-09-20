@@ -33,7 +33,14 @@ namespace Tempo_Social_Music.Controllers
             http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token.GetTokenAsync().Result.access_token}");
             var request = await http.GetAsync($"search{query}");
             var result = await request.Content.ReadAsAsync<SpotifySearchResult>();
-            return JsonSerializer.Serialize(result.tracks.items[0]);
+            try
+            {
+                return JsonSerializer.Serialize(result.tracks.items[0]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return NotFound(e);
+            }
         }
 
         //GET: /getArtistByName/{artistName}
@@ -46,7 +53,14 @@ namespace Tempo_Social_Music.Controllers
             http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token.GetTokenAsync().Result.access_token}");
             var request = await http.GetAsync($"search{query}");
             var result = await request.Content.ReadAsAsync<SpotifySearchResult>();
-            return JsonSerializer.Serialize(result.artists.items[0]);
+            try
+            {
+                return JsonSerializer.Serialize(result.artists.items[0]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return NotFound(e);
+            }
         }
 
         //GET: /getsongbyID/{songId}
