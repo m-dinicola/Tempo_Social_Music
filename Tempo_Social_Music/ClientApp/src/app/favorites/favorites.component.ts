@@ -18,8 +18,8 @@ export class FavoritesComponent implements OnInit {
 
   //Gets the favorites list for a user with a given ID.
   //KS
-  getJamsList(userPK: number) {
-    this.favoritesService.getJamsList(userPK).subscribe(
+  getJamsList(userName: string) {
+    this.favoritesService.getJamsList(userName).subscribe(
       result => {
         this.jamsList = result;
         console.log(this.jamsList)

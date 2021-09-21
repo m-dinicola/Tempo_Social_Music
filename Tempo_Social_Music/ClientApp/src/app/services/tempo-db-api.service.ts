@@ -36,4 +36,10 @@ export class TempoDBAPIService {
   createUser(newUser: TempoUser) {
     return this.http.post<TempoUser>(`${this.apiUri}/user`, newUser);
   }
+
+  //Update user bio
+  updateBio(newBio: string) {
+    return this.http.put<any>(`${this.apiUri}/bio`, newBio);
+
+  }
 }
