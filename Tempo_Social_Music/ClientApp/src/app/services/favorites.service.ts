@@ -9,6 +9,7 @@ import { Favorites } from '../models/Favorites';
 export class FavoritesService {
 
   apiUri: string = "https://localhost:44346/api/spotify";
+  jamsList: Favorites;
 
   constructor(private http: HttpClient) {
 
@@ -16,14 +17,17 @@ export class FavoritesService {
   }
 
   //get favorites tempodb/jams/userPK
+  getJamsList(userPK: number) {
+    return this.http.get<Favorites[]>(`${this.apiUri}/getJam/${userPK}`)
+  }
 
   //Add an artist to favorites list
-  addArtistFavorite(newFav: Favorites) {
-    return this.http.post<Favorites[]>(`${this.apiUri}/addjam/` , newFav);
+  addJam(newFav: Favorites) {
+    return this.http.post<Favorites>(`${this.apiUri}/addjam/`, { "Favorite": newFav.Favorite, "UserID": newFav.UserId, "SpotTrack": newFav.SpotTrack, "SpotArtist": newFav.SpotArtist })
   }
 
   //Delete an artist from your favorites list based on the artists ID.
-  deleteArtistFavorite(favorite: string) {
-    this.http.delete(`${this.apiUri}/deleteJam/${favorite}`);
+  deleteJam(favorite: string) {
+   return this.http.delete(`${this.apiUri}/deleteJam/${favorite}`);
   }
 }

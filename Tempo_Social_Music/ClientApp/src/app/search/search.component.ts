@@ -59,6 +59,7 @@ export class SearchComponent implements OnInit {
 
   //This will utilize the search form. It will take in a string "keyword" and seach
   //for that keyword when the search button is clicked.
+  //KS and M
   onSubmit(form: NgForm) {
     this.songSearch = null;
     this.artistSearch = null;
@@ -78,8 +79,7 @@ export class SearchComponent implements OnInit {
     else {
       this.getUserByName(this.songTitle);
     }
-
-
   }
+
 }
 

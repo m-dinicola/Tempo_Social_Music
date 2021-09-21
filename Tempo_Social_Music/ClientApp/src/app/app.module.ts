@@ -17,6 +17,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { SongComponent } from './song/song.component';
 import { ArtistComponent } from './artist/artist.component';
 import { TempoUserComponent } from './tempo-user/tempo-user.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TempoUserComponent } from './tempo-user/tempo-user.component';
     CreateUserComponent,
     SongComponent,
     ArtistComponent,
-    TempoUserComponent
+    TempoUserComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
