@@ -18,8 +18,8 @@ export class FavoritesComponent implements OnInit {
 
   //Gets the favorites list for a user with a given ID.
   //KS
-  getJamsList(userName: string) {
-    this.favoritesService.getJamsList(userName).subscribe(
+  getJamsList(userPk: number) {
+    this.favoritesService.getJamsList(userPk).subscribe(
       result => {
         this.jamsList = result;
         console.log(this.jamsList)
@@ -41,7 +41,7 @@ export class FavoritesComponent implements OnInit {
 
   //Delete a favorite based on the jam name, and the ID of the current user.
   //KS
-  deleteJam(jamName: string, userPK: number) {
+  deleteJam(jamName: Favorites, userPK: number) {
     this.favoritesService.deleteJam(jamName).subscribe(
       result => {
         console.log(this.jamsList);

@@ -17,17 +17,17 @@ export class FavoritesService {
   }
 
   //get favorites tempodb/jams/userPK
-  getJamsList(userName: string) {
-    return this.http.get<Favorites[]>(`${this.apiUri}/getJam/${userName}`)
+  getJamsList(userPk: number) {
+    return this.http.get<Favorites[]>(`${this.apiUri}/Jams/${userPk}`)
   }
 
   //Add an artist to favorites list
-  addJam(newFav: Favorites, userName: string) {
-    return this.http.post<Favorites>(`${this.apiUri}/addjam/`, { "Favorite": newFav.Favorite, "UserID": newFav.UserId, "SpotTrack": newFav.SpotTrack, "SpotArtist": newFav.SpotArtist })
+  addJam(newFav: Favorites) {
+    return this.http.post<Favorites>(`${this.apiUri}/Jams/`, newFav)
   }
 
   //Delete an artist from your favorites list based on the artists ID.
-  deleteJam(favorite: string) {
-   return this.http.delete(`${this.apiUri}/deleteJam/${favorite}`);
+  deleteJam(favorite: Favorites) {
+    return this.http.delete(`${this.apiUri}/Jams/${favorite.Favorite}`);
   }
 }
