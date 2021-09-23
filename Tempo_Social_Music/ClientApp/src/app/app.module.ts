@@ -20,6 +20,7 @@ import { TempoUserComponent } from './tempo-user/tempo-user.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BioComponent } from './bio/bio.component';
+import { ConnectionComponent } from './connection/connection.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BioComponent } from './bio/bio.component';
     TempoUserComponent,
     FavoritesComponent,
     ProfileComponent,
-    BioComponent
+    BioComponent,
+    ConnectionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +50,8 @@ import { BioComponent } from './bio/bio.component';
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'search', component: SearchComponent },
       { path: 'create-user', component: CreateUserComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'favorites', component: FavoritesComponent },
     ])
   ],
   providers: [

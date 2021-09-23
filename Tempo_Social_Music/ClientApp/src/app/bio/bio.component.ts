@@ -10,7 +10,7 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 })
 export class BioComponent implements OnInit {
 
-  userBio: string;
+  userBio: string = "this property is a test" ;
   @Input() tempoUser: TempoUser;
 
   constructor(private tempoDBService: TempoDBAPIService) { }

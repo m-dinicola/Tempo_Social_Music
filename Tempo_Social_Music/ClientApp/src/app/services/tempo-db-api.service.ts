@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable } from '@angular/core';
 import { TempoUser } from '../models/TempoUser';
 
 @Injectable({
@@ -7,12 +7,12 @@ import { TempoUser } from '../models/TempoUser';
 })
 export class TempoDBAPIService {
 
-  apiUri: string = "https://localhost:44346/api/tempodb";
+  apiUri: string = "";
   newDataAdded = new EventEmitter<string>();
 
-  constructor(private http: HttpClient) {
-
-    console.log(this.apiUri)
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUri: string) {
+    this.apiUri = `${baseUri}/api/tempodb`;
+    console.log(this.apiUri);
   }
 
   //Find a user by userName
