@@ -26,6 +26,7 @@ namespace Tempo_Social_Music.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string UserBio { get; set; }
+        public string AspNetUserId { get; set; }
 
         public virtual ICollection<Connection> ConnectionUser1Navigation { get; set; }
         public virtual ICollection<Connection> ConnectionUser2Navigation { get; set; }
