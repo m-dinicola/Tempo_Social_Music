@@ -11,7 +11,7 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 })
 export class CreateUserComponent implements OnInit {
 
-  apiUri: string = "https://localhost:44346/api/tempodb";
+  apiUri: string = "https://mixr.azurewebsites.net/api/tempodb";
   newDataAdded = new EventEmitter<string>();
 
   input: string;
@@ -25,7 +25,8 @@ export class CreateUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  //Create a new user object
+  //KS
   createUser(newUser: TempoUser) {
     this.tempoDBService.createUser(newUser).subscribe(
         result => {
@@ -36,7 +37,8 @@ export class CreateUserComponent implements OnInit {
       );
     }
 
-
+  //This will execute creating a new user when the button it is linked to is clicked.
+  //KS
   onSubmit(form: NgForm) {
     this.newUser = form.form.value;
     console.log(this.newUser);

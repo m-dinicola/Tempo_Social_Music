@@ -25,6 +25,7 @@ export class SearchComponent implements OnInit {
   }
 
   //Find a user by user name
+  //KS
   getUserByName(userName: string) {
     this.tempoDBService.getUserByName(userName).subscribe(
       result => {
@@ -36,6 +37,7 @@ export class SearchComponent implements OnInit {
   }
 
   //Find an artist/band by a keyword
+  //KS
   getArtistByName(keyword: string) {
     this.spotifyService.getArtistByName(keyword).subscribe(
       result => {
@@ -47,6 +49,7 @@ export class SearchComponent implements OnInit {
   }
 
   //Find a song by a keyword
+  //KS
   getSongByName(songName: string) {
     this.spotifyService.getSongByName(songName).subscribe(
       result => {
@@ -59,7 +62,7 @@ export class SearchComponent implements OnInit {
 
   //This will utilize the search form. It will take in a string "keyword" and seach
   //for that keyword when the search button is clicked.
-  //KS and M
+  //KS and MD
   onSubmit(form: NgForm) {
     this.songSearch = null;
     this.artistSearch = null;
