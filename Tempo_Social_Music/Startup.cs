@@ -30,7 +30,7 @@ namespace Tempo_Social_Music
             SpotifyConfig.ClientID = Configuration["Spotify:ClientID"];
             SpotifyConfig.ClientSecret = Configuration["Spotify:ClientSecret"];
             */
-
+            //including the auth database now that it's in 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

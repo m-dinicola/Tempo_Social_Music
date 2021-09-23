@@ -98,6 +98,11 @@ namespace Tempo_Social_Music.Models
 
                 entity.Property(e => e.UserPk).HasColumnName("UserPK");
 
+                entity.Property(e => e.AspNetUserId)
+                    .HasColumnName("AspNetUserID")
+                    .HasMaxLength(450)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(30);
