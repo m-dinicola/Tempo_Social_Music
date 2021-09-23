@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Tempo_Social_Music.Models;
 
 namespace Tempo_Social_Music.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TempoDB : ControllerBase
@@ -67,6 +70,20 @@ namespace Tempo_Social_Music.Controllers
             return output;
         }
 
+        //GET: api/TempoDB/user  
+        [HttpGet("user")]
+        public async Task<ActionResult<FrontEndUser>> GetCurrentUser()
+        {
+            //returns current tempoDB user parsed as front end user object
+            FrontEndUser foundUser = await ActiveFrontEndUser();
+            if (foundUser is null)
+            {
+                return Unauthorized();
+            }
+            return Ok(foundUser);
+        }
+
+
         #endregion
         #region Create
         //POST: api/TempoDB/user
@@ -98,10 +115,11 @@ namespace Tempo_Social_Music.Controllers
         [HttpPost("addUserFriend/{userString}")] //user string is of the form $"{Username1}&{Username2}"
         public async Task<ActionResult<List<FrontEndConnection>>> AddConnection(string userString)
         {
+            FrontEndUser user1 = await ActiveFrontEndUser();
             Connection newConnection;
             try
             {
-                newConnection = ParseConnectionUserString(userString);
+                newConnection = ParseConnectionUserString(user1.LoginName, userString);
             }
             catch (IndexOutOfRangeException)
             {
@@ -152,10 +170,11 @@ namespace Tempo_Social_Music.Controllers
         [HttpDelete("deleteUserFriend/{userString}")]
         public async Task<ActionResult> DeleteConnection(string userString)
         {
+            FrontEndUser user1 = await ActiveFrontEndUser();
             Connection connection;
             try
             {
-                connection = ParseConnectionUserString(userString);
+                connection = ParseConnectionUserString(user1.LoginName, userString);
             }
             catch (IndexOutOfRangeException)
             {
@@ -192,11 +211,13 @@ namespace Tempo_Social_Music.Controllers
         }
 
         #endregion
-        #region Support fxs
-        private Connection ParseConnectionUserString(string userString)
+        #region Support fxns
+        private Connection ParseConnectionUserString(string user1, string user2)
         {
             //parse userString into usernames
-            List<string> users = userString.Split('&').ToList();
+            List<string> users = new List<string>();
+            users.Add(user1);
+            users.Add(user2);
 
             //test to ensure 2 users were passed
             if (users.Count != 2 || users.Intersect(_context.TempoUser.Select(x => x.LoginName)).Count() != 2)
@@ -231,6 +252,14 @@ namespace Tempo_Social_Music.Controllers
                 (x.UserId == favorite.UserId && x.SpotArtist == favorite.SpotArtist && x.SpotTrack == favorite.SpotTrack)
                 );
             return oldFavorite;
+        }
+
+        private async Task<FrontEndUser> ActiveFrontEndUser()
+        {
+            var aspNetId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            TempoUser foundUser = await _context.TempoUser.FirstOrDefaultAsync(x => x.AspNetUserId == aspNetId);
+            return new FrontEndUser(foundUser);
+
         }
         #endregion
     }
