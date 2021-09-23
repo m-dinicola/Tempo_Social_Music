@@ -21,12 +21,9 @@ namespace Tempo_Social_Music
             Host.CreateDefaultBuilder(args)
 .ConfigureAppConfiguration((context, config) =>
 {
-    //var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-    var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("Vault"));
+    var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
     config.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
-    //var root = config.Build();
-    //config.AddAzureKeyVault($"https://{root["KeyVault:Vault"]}.vault.azure.net/", root["KeyVault:ClientId"], root["KeyVault:ClientSecret"]);
 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
