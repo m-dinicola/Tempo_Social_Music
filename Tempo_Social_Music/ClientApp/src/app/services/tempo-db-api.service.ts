@@ -21,8 +21,8 @@ export class TempoDBAPIService {
   }
 
   //Add a found user. Link this to a button.
-  addUserFriend(user1: string, user2: string) {
-    var message = `${user1}&${user2}`
+  addUserFriend(userConnect: string) {
+    var message = `${userConnect}`
     return this.http.post<TempoUser>(`${this.apiUri}/addUserFriend/${message}`, {});
   }
 

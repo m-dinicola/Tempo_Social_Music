@@ -17,8 +17,8 @@ export class FavoritesService {
   }
 
   //get favorites tempodb/jams/userPK
-  getJamsList(userPk: number) {
-    return this.http.get<Favorites[]>(`${this.apiUri}/Jams/${userPk}`)
+  getJam(userPk: number) {
+    return this.http.get<Favorites>(`${this.apiUri}/Jams/${userPk}`)
   }
 
   //Add an artist to favorites list
