@@ -1,2 +1,5 @@
 <p> {{ song.name }} </p>
 <img class="albumArt" src={{song.album.images[2].url}} />
+
+<button class="add-btn" (click)="addJam(song.id)">Add Jam</button>
+

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Favorites } from '../models/Favorites';
 import { FavoritesService } from '../services/favorites.service';
+import { SpotifyapiService } from '../services/spotifyapi.service';
 
 @Component({
   selector: 'app-favorites',
@@ -9,20 +10,20 @@ import { FavoritesService } from '../services/favorites.service';
 })
 export class FavoritesComponent implements OnInit {
 
-  jamsList: Favorites[] = [];
+  jam: Favorites;
 
-  constructor(private favoritesService: FavoritesService  ) { }
+  constructor(private favoritesService: FavoritesService, private spotifyService: SpotifyapiService  ) { }
 
   ngOnInit(): void {
   }
 
   //Gets the favorites list for a user with a given ID.
   //KS
-  getJamsList(userPk: number) {
-    this.favoritesService.getJamsList(userPk).subscribe(
+  getJam(userPk: number) {
+    this.favoritesService.getJam(userPk).subscribe(
       result => {
-        this.jamsList = result;
-        console.log(this.jamsList)
+        this.jam = result;
+        console.log(this.jam)
       },
       error => console.log(error)
     );
@@ -33,7 +34,7 @@ export class FavoritesComponent implements OnInit {
   addJam(jamName: Favorites) {
     this.favoritesService.addJam(jamName).subscribe(
       result => {
-        console.log(this.jamsList);
+        console.log(this.jam);
       },
       error => console.log(error)
     );
@@ -44,8 +45,8 @@ export class FavoritesComponent implements OnInit {
   deleteJam(jamName: Favorites, userPK: number) {
     this.favoritesService.deleteJam(jamName).subscribe(
       result => {
-        console.log(this.jamsList);
-        this.getJamsList(userPK);
+        console.log(this.jam);
+        this.getJam(userPK);
       },
       error => console.log(error)
     );
