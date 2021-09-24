@@ -18,6 +18,24 @@ namespace Tempo_Social_Music.Models
             RecommendationUserToNavigation = new HashSet<Recommendation>();
         }
 
+        public TempoUser(FrontEndUser frontEndUser, string aspNetIdString)
+        {
+            ConnectionUser1Navigation = new HashSet<Connection>();
+            ConnectionUser2Navigation = new HashSet<Connection>();
+            Favorites = new HashSet<Favorites>();
+            RecommendationUserFromNavigation = new HashSet<Recommendation>();
+            RecommendationUserToNavigation = new HashSet<Recommendation>();
+            UserPk = frontEndUser.UserPk;
+            LoginName = frontEndUser.LoginName;
+            FirstName = frontEndUser.FirstName;
+            LastName = frontEndUser.LastName;
+            StreetAddress = frontEndUser.StreetAddress;
+            State = frontEndUser.State;
+            ZipCode = frontEndUser.ZipCode;
+            UserBio = frontEndUser.UserBio;
+            AspNetUserId = aspNetIdString;
+        }
+
         public int UserPk { get; set; }
         public string LoginName { get; set; }
         public string FirstName { get; set; }

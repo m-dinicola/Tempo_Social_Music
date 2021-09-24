@@ -89,11 +89,15 @@ namespace Tempo_Social_Music.Controllers
         //POST: api/TempoDB/user
         //pair progammed by AL & MD
         [HttpPost("user")]
-        public async Task<ActionResult<TempoUser>> CreateUser(TempoUser newUser)
+        public async Task<ActionResult<TempoUser>> CreateUser(FrontEndUser newUser)
         {
+            string aspNetId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             try
             {
-                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName) || string.IsNullOrEmpty(newUser.LoginName) || string.IsNullOrEmpty(newUser.FirstName))
+                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName) 
+                    || string.IsNullOrEmpty(newUser.LoginName) 
+                    || string.IsNullOrEmpty(newUser.FirstName) 
+                    || _context.TempoUser.FirstOrDefaultAsync(x => x.AspNetUserId == aspNetId) != null)
                 {
                     return BadRequest();
                     //if required fields are empty or username already exists cannot create new user.
@@ -103,7 +107,9 @@ namespace Tempo_Social_Music.Controllers
             {
                 return BadRequest(e);
             }
-            _context.TempoUser.Add(newUser);    //add new user to database
+
+            
+            _context.TempoUser.Add(new TempoUser(newUser, aspNetId));    //add new user to database
             await _context.SaveChangesAsync();  //save changes to database
             return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName}, newUser);  
             //redirect to user page for new user
@@ -164,10 +170,50 @@ namespace Tempo_Social_Music.Controllers
 
 
         #endregion
-        #region Delete
-        //DELETE: api/tempoDB/deleteUserFriend/{userString}
-        //pair programmed by M and AL
-        [HttpDelete("deleteUserFriend/{userString}")]
+        #region Update
+
+        //PUT: api/TempoDB/user
+        //pair progammed by MH & MD
+        [HttpPut("user")]
+        public async Task<ActionResult<TempoUser>> UpdateUser(TempoUser newUser)
+        {
+            FrontEndUser activeUser = await ActiveFrontEndUser();
+            TempoUser oldUser = await _context.TempoUser.FindAsync(activeUser.UserPk);
+            try
+            {
+                if (oldUser is null || (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName) && newUser.LoginName != oldUser.LoginName))
+                {
+                    return BadRequest();
+                    //if required fields are empty or username already exists cannot create new user.
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                return BadRequest(e);
+            }
+
+            oldUser.LoginName = string.IsNullOrEmpty(newUser.LoginName) ? oldUser.LoginName : newUser.LoginName;
+            oldUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? oldUser.FirstName : newUser.FirstName;
+            oldUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? oldUser.LastName : newUser.LastName;
+            oldUser.StreetAddress = string.IsNullOrEmpty(newUser.StreetAddress) ? oldUser.StreetAddress : newUser.StreetAddress;
+            oldUser.ZipCode = string.IsNullOrEmpty(newUser.ZipCode) ? oldUser.ZipCode : newUser.ZipCode;
+            oldUser.State = string.IsNullOrEmpty(newUser.State) ? oldUser.State : newUser.State;
+            oldUser.UserBio = string.IsNullOrEmpty(newUser.UserBio) ? oldUser.UserBio : newUser.UserBio;
+
+            _context.Entry(oldUser).State = EntityState.Modified;    //track modification of Tempo User
+            _context.Update(oldUser);
+            await _context.SaveChangesAsync();  //save changes to database
+            return AcceptedAtAction(nameof(GetUserByName), new { username = oldUser.LoginName }, oldUser);
+            //redirect to user page for new user
+        }
+
+            #endregion
+
+
+            #region Delete
+            //DELETE: api/tempoDB/deleteUserFriend/{userString}
+            //pair programmed by M and AL
+            [HttpDelete("deleteUserFriend/{userString}")]
         public async Task<ActionResult> DeleteConnection(string userString)
         {
             FrontEndUser user1 = await ActiveFrontEndUser();
