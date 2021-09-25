@@ -16,6 +16,8 @@ namespace Tempo_Social_Music.Models
 
         public virtual TempoUser User { get; set; }
 
+        public Favorites() { }
+
         public Favorites(FrontEndFavorite favorite)
         {
             Favorite = favorite.Favorite;

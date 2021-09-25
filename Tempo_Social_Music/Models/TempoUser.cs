@@ -11,11 +11,11 @@ namespace Tempo_Social_Music.Models
     {
         public TempoUser()
         {
-            ConnectionUser1Navigation = new HashSet<Connection>();
-            ConnectionUser2Navigation = new HashSet<Connection>();
-            Favorites = new HashSet<Favorites>();
-            RecommendationUserFromNavigation = new HashSet<Recommendation>();
-            RecommendationUserToNavigation = new HashSet<Recommendation>();
+            //ConnectionUser1Navigation = new HashSet<Connection>();
+            //ConnectionUser2Navigation = new HashSet<Connection>();
+            //Favorites = new HashSet<Favorites>();
+            //RecommendationUserFromNavigation = new HashSet<Recommendation>();
+            //RecommendationUserToNavigation = new HashSet<Recommendation>();
         }
 
         public TempoUser(FrontEndUser frontEndUser, string aspNetIdString)

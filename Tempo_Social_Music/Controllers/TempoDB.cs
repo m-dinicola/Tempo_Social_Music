@@ -23,6 +23,104 @@ namespace Tempo_Social_Music.Controllers
             _context = context;
         }
 
+        #region Create
+        //POST: api/TempoDB/user
+        //pair progammed by AL & MD
+        //allows creation of new Mixee if active user doesn't already have a handle
+        [HttpPost("user")]
+        public async Task<ActionResult<FrontEndUser>> CreateUser(FrontEndUser newUser)
+        {
+            string aspNetId;
+            try
+            {
+                aspNetId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName)  
+                    || _context.TempoUser.FirstOrDefaultAsync(x => x.AspNetUserId == aspNetId).Result != null)
+                {
+                    return Unauthorized();
+                    //loginName already exists or user already has a login name cannot create new user.
+                }
+
+                if (string.IsNullOrEmpty(newUser.LoginName) || string.IsNullOrEmpty(newUser.FirstName)){
+                    return BadRequest();
+                }
+            }
+            catch (NullReferenceException)
+            {
+                //if user is not logged in, aspNetId produces a NullReferenceException
+                return Forbid();
+            }
+
+            TempoUser newTempoUser = new TempoUser(newUser, aspNetId); //creates TempoUser with frontenduser and aspNetID string
+            _context.TempoUser.Add(newTempoUser);    //add new user to database
+            await _context.SaveChangesAsync();  //save changes to database
+            return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName}, new FrontEndUser(newTempoUser));  
+            //allow redirect to user page for new user
+
+        }
+
+        //POST: api/TempoDB/addUserFriend
+        //pair progreammed by AL & MD
+        //posts a new connection to the connection table between active user and userString Mixee
+        //note: connections are symmetric, which means either party can initiate or end a connection
+        //potential for harrassment or abuse. Will eventually change symmetry
+        [HttpPost("addUserFriend/{userString}")] //user string is of the Mixee that active user wants to connect with
+        public async Task<ActionResult<List<FrontEndConnection>>> AddConnection(string userString)
+        {
+            FrontEndUser user1 = await ActiveFrontEndUser();
+            Connection newConnection;
+            try
+            {
+                newConnection = ParseConnectionUserString(user1.LoginName, userString);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return BadRequest();
+            }
+            //see if table already contains match for these users
+            Connection oldConnection = await PreexistingConnectionAsync(newConnection);
+
+            //add new connection to DB if it doesn't already exist, return Created ActionResult
+            if (oldConnection is null)
+            {
+                _context.Connection.Add(newConnection);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1}, new FrontEndConnection(newConnection));
+            }
+
+            //if connection already exists, just return OK actionresult.
+            return Ok(new FrontEndConnection(oldConnection));
+        }
+
+        // POST: api/tempoDB/Jams
+        // by M
+        [HttpPost("Jams")]
+        public async Task<ActionResult<FrontEndFavorite>> AddJam(FrontEndFavorite newFave)
+        {
+            //add the active user to the desired new Jam
+            newFave.UserId = ActiveFrontEndUser().Result.UserPk;
+            //check if that user already has that as a Jam
+            Favorites oldFave = PreexistingFavoriteAsync(new Favorites(newFave)).Result;
+            if(oldFave != null)
+            {
+                //if so, no change necessary
+                return Ok(newFave);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                //if the model state doesn't work, don't add it to the DB
+                return BadRequest();
+            }
+
+            _context.Favorites.Add(new Favorites(newFave)); //if all tests pass, add to the DB
+            await _context.SaveChangesAsync();              //save changes
+            return CreatedAtAction(nameof(GetFavoritesAsync), new { userPK = newFave.UserId }, newFave);
+            //allow reroute to favorites list.
+        }
+
+
+        #endregion
         #region Read
         // GET: api/TempoDB/username
         [HttpGet("username/{username}")]
@@ -81,100 +179,6 @@ namespace Tempo_Social_Music.Controllers
                 return Unauthorized();
             }
             return Ok(foundUser);
-        }
-
-
-        #endregion
-        #region Create
-        //POST: api/TempoDB/user
-        //pair progammed by AL & MD
-        //allows creation of new Mixee if active user doesn't already have a handle
-        [HttpPost("user")]
-        public async Task<ActionResult<FrontEndUser>> CreateUser(FrontEndUser newUser)
-        {
-            string aspNetId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            try
-            {
-                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName) 
-                    || string.IsNullOrEmpty(newUser.LoginName) 
-                    || string.IsNullOrEmpty(newUser.FirstName) 
-                    || _context.TempoUser.FirstOrDefaultAsync(x => x.AspNetUserId == aspNetId) != null)
-                {
-                    return BadRequest();
-                    //if required fields are empty or username already exists cannot create new user.
-                }
-            }
-            catch (NullReferenceException e)
-            {
-                return BadRequest(e);
-            }
-
-            TempoUser newTempoUser = new TempoUser(newUser, aspNetId); //creates TempoUser with frontenduser and aspNetID string
-            _context.TempoUser.Add(newTempoUser);    //add new user to database
-            await _context.SaveChangesAsync();  //save changes to database
-            return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName}, new FrontEndUser(newTempoUser));  
-            //allow redirect to user page for new user
-
-        }
-
-        //POST: api/TempoDB/addUserFriend
-        //pair progreammed by AL & MD
-        //posts a new connection to the connection table between active user and userString Mixee
-        //note: connections are symmetric, which means either party can initiate or end a connection
-        //potential for harrassment or abuse. Will eventually change symmetry
-        [HttpPost("addUserFriend/{userString}")] //user string is of the Mixee that active user wants to connect with
-        public async Task<ActionResult<List<FrontEndConnection>>> AddConnection(string userString)
-        {
-            FrontEndUser user1 = await ActiveFrontEndUser();
-            Connection newConnection;
-            try
-            {
-                newConnection = ParseConnectionUserString(user1.LoginName, userString);
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return BadRequest();
-            }
-            //see if table already contains match for these users
-            Connection oldConnection = await PreexistingConnectionAsync(newConnection);
-
-            //add new connection to DB if it doesn't already exist, return Created ActionResult
-            if (oldConnection is null)
-            {
-                _context.Connection.Add(newConnection);
-                await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1}, new FrontEndConnection(newConnection));
-            }
-
-            //if connection already exists, just return OK actionresult.
-            return Ok(new FrontEndConnection(oldConnection));
-        }
-
-        // POST: api/tempoDB/Jams
-        // by M
-        [HttpPost("Jams")]
-        public async Task<ActionResult<Favorites>> AddJam(FrontEndFavorite newFave)
-        {
-            //add the active user to the desired new Jam
-            newFave.UserId = ActiveFrontEndUser().Result.UserPk;
-            //check if that user already has that as a Jam
-            Favorites oldFave = PreexistingFavoriteAsync(new Favorites(newFave)).Result;
-            if(oldFave != null)
-            {
-                //if so, no change necessary
-                return Ok(newFave);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                //if the model state doesn't work, don't add it to the DB
-                return BadRequest();
-            }
-
-            _context.Favorites.Add(new Favorites(newFave)); //if all tests pass, add to the DB
-            await _context.SaveChangesAsync();              //save changes
-            return CreatedAtAction(nameof(GetFavoritesAsync), new { userPK = newFave.UserId }, newFave);
-            //allow reroute to favorites list.
         }
 
 

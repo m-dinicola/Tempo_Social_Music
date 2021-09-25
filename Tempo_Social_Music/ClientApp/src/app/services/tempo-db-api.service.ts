@@ -11,7 +11,7 @@ export class TempoDBAPIService {
   newDataAdded = new EventEmitter<string>();
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUri: string) {
-    this.apiUri = `${baseUri}/api/tempodb`;
+    this.apiUri = `${baseUri}api/tempodb`;
     console.log(this.apiUri);
   }
 
