@@ -19,13 +19,13 @@ body
  h1
  {
   color: #1CF00B;
-  text-shadow: 5px 5px 5px #C6FBC2;
+  text-shadow: 0px 0px 14px #BBFBB6;
   font-size: 75px;
  }
 
  p{
   color: #f7f7f7;
-  text-shadow: 1px 1px 1px black, 4px 4px 5px #1CF00B;
+  text-shadow: 0px 0px 0px black, 0px 0px 6px #1CF00B;
   font-size: 50px;
  }
 
