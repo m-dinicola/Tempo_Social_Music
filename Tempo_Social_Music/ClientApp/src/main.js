@@ -6,7 +6,7 @@ var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
 var app_module_1 = require("./app/app.module");
 var environment_1 = require("./environments/environment");
 function getBaseUrl() {
-    return document.location;
+    return document.getElementsByTagName('base')[0].href;
 }
 exports.getBaseUrl = getBaseUrl;
 var providers = [

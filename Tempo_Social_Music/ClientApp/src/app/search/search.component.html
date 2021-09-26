@@ -16,13 +16,11 @@
 <div *ngIf="songSearch">
 
   <app-song [song]="songSearch">   </app-song>
-  <!--<button class="btn-add" (click)="addJam(songSearch.name)">Add Jam</button>-->
 </div>
 
 <div *ngIf="artistSearch">
 
   <app-artist [artist]="artistSearch">   </app-artist>
-  <button class="btn-add">Add Jam</button>
 </div>
 
 <div *ngIf="userSearch">

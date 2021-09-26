@@ -15,6 +15,11 @@ export class TempoDBAPIService {
     console.log(this.apiUri);
   }
 
+  //get active user
+  getActiveUser(){
+    return this.http.get<TempoUser>(`${this.apiUri}/user`);
+  }
+
   //Find a user by userName
   getUserByName(userName: string) {
     return this.http.get<TempoUser>(`${this.apiUri}/username/${userName}`);

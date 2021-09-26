@@ -56,11 +56,9 @@ namespace Tempo_Social_Music.Models
                     .HasName("PK__Favorite__54FC60F165C90270");
 
                 entity.Property(e => e.SpotArtist)
-                    .IsRequired()
                     .HasMaxLength(200);
 
                 entity.Property(e => e.SpotTrack)
-                    .IsRequired()
                     .HasMaxLength(200);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");

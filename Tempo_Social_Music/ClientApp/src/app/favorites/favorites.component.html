@@ -1,12 +1,8 @@
-<p>
-  Jams Work!
-</p>
-<ol class="jam">
-  <li *ngFor="let j of jam">
-    <p>{{ jam.SpotTrack }}</p>
-    <p>{{ jam.SpotArtist }}</p>
-    
 
+<ol class="jam">
+  <li *ngFor="let j of jams">
+    <div *ngIf="j.SpotTrack"><app-song [isFavorite]="j"></app-song></div>
+    <div *ngIf="j.SpotArtist"><app-artist [isFavorite]="j"></app-artist></div>
   </li>
-  
+
 </ol>

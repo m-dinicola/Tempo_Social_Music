@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Artists } from '../models/Artists';
 import { Favorites } from '../models/Favorites';
 
@@ -8,17 +8,18 @@ import { Favorites } from '../models/Favorites';
 })
 export class FavoritesService {
 
-  apiUri: string = "https://localhost:44346/api/tempodb";
+  apiUri: string;
   jamsList: Favorites;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUri: string) {
+    this.apiUri = `${baseUri}api/tempodb`;
 
     console.log(this.apiUri);
   }
 
   //get favorites tempodb/jams/userPK
-  getJam(userPk: number) {
-    return this.http.get<Favorites>(`${this.apiUri}/Jams/${userPk}`)
+  getJams(userPk: number) {
+    return this.http.get<Favorites[]>(`${this.apiUri}/Jams/${userPk}`)
   }
 
   //Add an artist to favorites list

@@ -34,14 +34,15 @@ namespace Tempo_Social_Music.Controllers
             try
             {
                 aspNetId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName)  
+                if (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName)
                     || _context.TempoUser.FirstOrDefaultAsync(x => x.AspNetUserId == aspNetId).Result != null)
                 {
                     return Unauthorized();
                     //loginName already exists or user already has a login name cannot create new user.
                 }
 
-                if (string.IsNullOrEmpty(newUser.LoginName) || string.IsNullOrEmpty(newUser.FirstName)){
+                if (string.IsNullOrEmpty(newUser.LoginName) || string.IsNullOrEmpty(newUser.FirstName))
+                {
                     return BadRequest();
                 }
             }
@@ -54,7 +55,7 @@ namespace Tempo_Social_Music.Controllers
             TempoUser newTempoUser = new TempoUser(newUser, aspNetId); //creates TempoUser with frontenduser and aspNetID string
             _context.TempoUser.Add(newTempoUser);    //add new user to database
             await _context.SaveChangesAsync();  //save changes to database
-            return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName}, new FrontEndUser(newTempoUser));  
+            return CreatedAtAction(nameof(GetUserByName), new { username = newUser.LoginName }, new FrontEndUser(newTempoUser));
             //allow redirect to user page for new user
 
         }
@@ -85,7 +86,7 @@ namespace Tempo_Social_Music.Controllers
             {
                 _context.Connection.Add(newConnection);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1}, new FrontEndConnection(newConnection));
+                return CreatedAtAction(nameof(GetConnectionsAsync), new { userPK = newConnection.User1 }, new FrontEndConnection(newConnection));
             }
 
             //if connection already exists, just return OK actionresult.
@@ -101,7 +102,7 @@ namespace Tempo_Social_Music.Controllers
             newFave.UserId = ActiveFrontEndUser().Result.UserPk;
             //check if that user already has that as a Jam
             Favorites oldFave = PreexistingFavoriteAsync(new Favorites(newFave)).Result;
-            if(oldFave != null)
+            if (oldFave != null)
             {
                 //if so, no change necessary
                 return Ok(newFave);
@@ -124,7 +125,8 @@ namespace Tempo_Social_Music.Controllers
         #region Read
         // GET: api/TempoDB/username
         [HttpGet("username/{username}")]
-        public async Task<ActionResult<FrontEndUser>> GetUserByName(string username) {
+        public async Task<ActionResult<FrontEndUser>> GetUserByName(string username)
+        {
             var getUser = await _context.TempoUser.FirstAsync(x => x.LoginName.ToLower() == username.ToLower());
             if (getUser is null)
             {
@@ -150,7 +152,7 @@ namespace Tempo_Social_Music.Controllers
         [HttpGet("Jams/{userPK}")]
         public async Task<List<FrontEndFavorite>> GetFavoritesAsync(int userPK)
         {
-            var awaiter = await _context.Favorites.Where(x => x.UserId == userPK).OrderBy(x => x.SpotArtist).ToListAsync();
+            var awaiter = await _context.Favorites.Where(x => x.UserId == userPK).ToListAsync();
             var output = new List<FrontEndFavorite>();
             awaiter.ForEach(x => output.Add(new FrontEndFavorite(x)));
             return output;
@@ -162,7 +164,7 @@ namespace Tempo_Social_Music.Controllers
         public async Task<List<FrontEndConnection>> GetConnectionsAsync(int userPK)
         {
             //return filtered table of connections which have userPK as User1 or User2 from tempoDB.Connection table
-            var awaiter = await _context.Connection.Where(x => x.User1 == userPK || x.User2 == userPK).OrderByDescending(x=>x.MatchValue).ToListAsync();
+            var awaiter = await _context.Connection.Where(x => x.User1 == userPK || x.User2 == userPK).OrderByDescending(x => x.MatchValue).ToListAsync();
             var output = new List<FrontEndConnection>();
             awaiter.ForEach(x => output.Add(new FrontEndConnection(x)));
             return output;
@@ -198,8 +200,8 @@ namespace Tempo_Social_Music.Controllers
             try
             {
                 //old Mixee will be null if active user has no associated Mixr acct.
-                if (oldUser is null 
-                    || (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName) 
+                if (oldUser is null
+                    || (_context.TempoUser.Select(x => x.LoginName).Contains(newUser.LoginName)
                         && newUser.LoginName != oldUser.LoginName))
                 {
                     return BadRequest();
@@ -218,7 +220,7 @@ namespace Tempo_Social_Music.Controllers
             oldUser.ZipCode = string.IsNullOrEmpty(newUser.ZipCode) ? oldUser.ZipCode : newUser.ZipCode;
             oldUser.State = string.IsNullOrEmpty(newUser.State) ? oldUser.State : newUser.State;
             oldUser.UserBio = string.IsNullOrEmpty(newUser.UserBio) ? oldUser.UserBio : newUser.UserBio;
-            
+
             _context.Entry(oldUser).State = EntityState.Modified;    //track modification of old TempoUser
             _context.Update(oldUser);
             await _context.SaveChangesAsync();  //save changes to database
@@ -226,14 +228,12 @@ namespace Tempo_Social_Music.Controllers
             //allow redirect to user page for new user
         }
 
-            #endregion
-
-
-            #region Delete
-            //DELETE: api/tempoDB/deleteUserFriend/{userString}
-            //pair programmed by M and AL
-            //deletes connection between a given user and active user
-            [HttpDelete("deleteUserFriend/{userString}")]
+        #endregion
+        #region Delete
+        //DELETE: api/tempoDB/deleteUserFriend/{userString}
+        //pair programmed by M and AL
+        //deletes connection between a given user and active user
+        [HttpDelete("deleteUserFriend/{userString}")]
         public async Task<ActionResult> DeleteConnection(string userString)
         {
             //gets active user
@@ -251,7 +251,7 @@ namespace Tempo_Social_Music.Controllers
 
             //sees if connection already exists
             Connection oldConnection = await PreexistingConnectionAsync(connection);
-            if(oldConnection is null)
+            if (oldConnection is null)
             {
                 //if it doesn't, no need to delete
                 return Ok();
@@ -273,7 +273,7 @@ namespace Tempo_Social_Music.Controllers
         {
             //gets the jam with a given key
             Favorites oldJam = await _context.Favorites.FindAsync(jam);
-            if(oldJam is null)
+            if (oldJam is null)
             {
                 // if the jam doesn't exist, no need to delete
                 return Ok();
@@ -335,7 +335,7 @@ namespace Tempo_Social_Music.Controllers
             //see if table already contains match for these users
             Favorites oldFavorite = await _context.Favorites.FirstOrDefaultAsync(x =>
                 (
-                x.UserId == favorite.UserId 
+                x.UserId == favorite.UserId
                 && (x.SpotArtist == favorite.SpotArtist || x.SpotTrack == favorite.SpotTrack))
                 );
             return oldFavorite;
