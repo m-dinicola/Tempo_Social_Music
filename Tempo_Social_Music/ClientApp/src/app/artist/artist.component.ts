@@ -13,14 +13,14 @@ export class ArtistComponent implements OnInit {
 
   @Input() artist: Artists;
   @Input() isFavorite: Favorites;
-  jam: Favorites = {Favorite:0, UserId:0, SpotTrack:null, SpotArtist:null}
+  jam: Favorites = { Favorite: 0, UserId: 0, SpotTrack: null, SpotArtist: null }
 
   constructor(private spotifyService: SpotifyapiService, private favoritesService: FavoritesService) { }
 
 
   ngOnInit() {
     console.log(this.isFavorite);
-    if(this.isFavorite){
+    if (this.isFavorite) {
       this.spotifyService.getArtistById(this.isFavorite.SpotArtist).subscribe(
         result => this.artist = result,
         error => console.log(error)
@@ -29,7 +29,7 @@ export class ArtistComponent implements OnInit {
 
   }
 
- //Adds a favorite to the current user's favorite list.
+  //Adds a favorite to the current user's favorite list.
   //KS
   addJam(jamId: string) {
     this.jam.SpotArtist = jamId;

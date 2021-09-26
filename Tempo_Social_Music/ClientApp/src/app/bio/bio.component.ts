@@ -14,13 +14,14 @@ export class BioComponent implements OnInit {
   userBio: string = "this property is a test";
   @Input() tempoUser: TempoUser = {
     userPk: 0,
-    loginName:"",
+    loginName: "",
     firstName: "",
     lastName: "",
-    streetAddress:"",
-    state:"",
-    zipCode:"",
-    userBio:""};
+    streetAddress: "",
+    state: "",
+    zipCode: "",
+    userBio: ""
+  };
 
   constructor(private tempoDBService: TempoDBAPIService, private http: HttpClient) { }
 
@@ -32,7 +33,7 @@ export class BioComponent implements OnInit {
   updateBio(newBio: string) {
     this.tempoDBService.updateBio(newBio).subscribe(
       result => {
-        this.userBio = result.userBio;
+        newBio = result.userBio;
         console.log(this.userBio);
       },
       error => {
@@ -40,4 +41,13 @@ export class BioComponent implements OnInit {
       }
     );
   }
+
+  //getUserBio(bio:TempoUser) {
+  //  this.tempoDBService.getUserBio(bio.userBio).subscribe(
+  //    result => {
+  //      this.userBio = result
+  //    },
+  //    error => console.log(error)
+  //  );
+  //}
 }
