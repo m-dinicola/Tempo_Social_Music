@@ -15,5 +15,15 @@ namespace Tempo_Social_Music.Models
         public string SpotArtist { get; set; }
 
         public virtual TempoUser User { get; set; }
+
+        public Favorites() { }
+
+        public Favorites(FrontEndFavorite favorite)
+        {
+            Favorite = favorite.Favorite;
+            UserId = favorite.UserId;
+            SpotTrack = favorite.SpotTrack;
+            SpotArtist = favorite.SpotArtist;
+        }
     }
 }

@@ -1,4 +1,6 @@
+import { TempoUser } from './../models/TempoUser';
 import { Component, OnInit } from '@angular/core';
+import { Favorites } from '../models/Favorites';
 import { FavoritesService } from '../services/favorites.service';
 import { TempoDBAPIService } from '../services/tempo-db-api.service';
 
@@ -9,9 +11,25 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private tempoDBService: TempoDBAPIService, private favoritesService: FavoritesService) { }
-
-  ngOnInit(): void {
+  activeUser: TempoUser = {userPk:0,loginName:null,firstName:null,lastName:null,streetAddress:null,state:null,zipCode:null,userBio:null};
+  activeUsersFaves: Favorites[];
+  constructor(private tempoDBService: TempoDBAPIService, private favoritesService: FavoritesService) {
   }
 
+  ngOnInit(): void {
+    this.tempoDBService.getActiveUser().subscribe(
+      result => {
+        this.activeUser = result;
+        this.getJamsList();
+      },
+      error => console.log(error)
+    );
+  }
+
+  getJamsList(): void{
+    this.favoritesService.getJams(this.activeUser.userPk).subscribe(
+      result => this.activeUsersFaves = result,
+      error => console.log(error)
+    )
+  }
 }

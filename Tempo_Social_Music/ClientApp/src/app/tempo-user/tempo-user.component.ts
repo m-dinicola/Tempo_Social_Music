@@ -15,7 +15,7 @@ export class TempoUserComponent implements OnInit {
 
 
   ngOnInit() {
-    
+
     console.log(this.tempouser.loginName);
 
   }

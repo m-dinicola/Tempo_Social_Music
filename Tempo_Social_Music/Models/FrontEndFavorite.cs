@@ -12,6 +12,10 @@ namespace Tempo_Social_Music.Models
         public string SpotTrack { get; set; }
         public string SpotArtist { get; set; }
 
+        public FrontEndFavorite()
+        {
+        }
+
         public FrontEndFavorite(Favorites favorite)
         {
             Favorite = favorite.Favorite;

@@ -11,8 +11,13 @@ export class TempoDBAPIService {
   newDataAdded = new EventEmitter<string>();
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUri: string) {
-    this.apiUri = `${baseUri}/api/tempodb`;
+    this.apiUri = `${baseUri}api/tempodb`;
     console.log(this.apiUri);
+  }
+
+  //get active user
+  getActiveUser(){
+    return this.http.get<TempoUser>(`${this.apiUri}/user`);
   }
 
   //Find a user by userName
@@ -21,8 +26,8 @@ export class TempoDBAPIService {
   }
 
   //Add a found user. Link this to a button.
-  addUserFriend(user1: string, user2: string) {
-    var message = `${user1}&${user2}`
+  addUserFriend(userConnect: string) {
+    var message = `${userConnect}`
     return this.http.post<TempoUser>(`${this.apiUri}/addUserFriend/${message}`, {});
   }
 
