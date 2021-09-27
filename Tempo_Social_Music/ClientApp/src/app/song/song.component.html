@@ -1,5 +1,5 @@
 <p> {{ song.name }} </p>
-<img class="albumArt" src={{song.album.images[2].url}} />
+<img class="albumArt" src={{song.album.images[2].url}} width="auto" />
 <div *ngIf="!isFavorite">
 <button class="add-btn" (click)="addJam(song.id)">That's my Jam!</button>
 </div>

@@ -1,3 +1,17 @@
+<link rel="stylesheet" href="search.component.css">
+
+
+
+<body>
+</body>
+  <!-- </body>
+  <div class="header" style="margin-bottom:0">
+    <h1>MIXR</h1>
+    <p>Find your rythm</p>
+  </div> -->
+
+
+    <div class="search-container">
 <form class="search-form" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
   <div class="dropMenu">
     <label for="category">Select</label>
@@ -8,6 +22,7 @@
       <option value="3">User</option>
     </select>
   </div>
+  <br>
   <input class="search-input" name="search" ngModel />
 
   <button class="btn-search">Search</button>
@@ -28,5 +43,5 @@
   <app-tempo-user [tempouser]="userSearch">   </app-tempo-user>
   <button class="btn-add">Add Connection</button>
 </div>
-
+</div>
 
