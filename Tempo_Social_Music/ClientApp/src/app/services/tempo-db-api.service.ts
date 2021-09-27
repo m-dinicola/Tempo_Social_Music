@@ -16,7 +16,7 @@ export class TempoDBAPIService {
   }
 
   //get active user
-  getActiveUser(){
+  getActiveUser() {
     return this.http.get<TempoUser>(`${this.apiUri}/user`);
   }
 
@@ -44,7 +44,11 @@ export class TempoDBAPIService {
 
   //Update user bio
   updateBio(newBio: string) {
-    return this.http.put<any>(`${this.apiUri}/bio`, newBio);
+    return this.http.put<any>(`${this.apiUri}/user`, newBio);
 
+  }
+
+  getUserBio(bio: string) {
+    return this.http.get<TempoUser>(`${this.apiUri}/user`)
   }
 }

@@ -13,14 +13,14 @@ export class SongComponent implements OnInit {
 
   @Input() song: Song;
   @Input() isFavorite: Favorites;
-  jam: Favorites = {Favorite:0, UserId:0, SpotTrack:null, SpotArtist:null};
+  jam: Favorites = { Favorite: 0, UserId: 0, SpotTrack: null, SpotArtist: null };
 
   constructor(private spotifyService: SpotifyapiService, private favoritesService: FavoritesService) {
-   }
+  }
 
 
   ngOnInit() {
-    if(this.isFavorite){
+    if (this.isFavorite) {
       this.spotifyService.getSongById(this.isFavorite.SpotTrack).subscribe(
         result => this.song = result,
         error => console.log(error)
