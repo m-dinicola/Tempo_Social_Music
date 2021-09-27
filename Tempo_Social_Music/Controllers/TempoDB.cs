@@ -336,7 +336,7 @@ namespace Tempo_Social_Music.Controllers
             Favorites oldFavorite = await _context.Favorites.FirstOrDefaultAsync(x =>
                 (
                 x.UserId == favorite.UserId
-                && (x.SpotArtist == favorite.SpotArtist || x.SpotTrack == favorite.SpotTrack))
+                && (x.SpotArtist == favorite.SpotArtist && x.SpotTrack == favorite.SpotTrack))
                 );
             return oldFavorite;
         }
