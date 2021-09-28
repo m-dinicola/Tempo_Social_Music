@@ -56,8 +56,8 @@ import { SearchpageComponent } from './searchpage/searchpage.component';
       { path: 'create-user', component: CreateUserComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'favorites', component: FavoritesComponent },
-      { path: 'bio', component: BioComponent }
-      { path: 'searchpage', component: SearchpageComponent },
+      { path: 'bio', component: BioComponent },
+      { path: 'searchpage', component: SearchpageComponent }
     ])
   ],
   providers: [
