@@ -12,16 +12,17 @@ import { SpotifyapiService } from '../services/spotifyapi.service';
 export class SongComponent implements OnInit {
 
   @Input() song: Song;
-  @Input() isFavorite: Favorites;
-  jam: Favorites = {Favorite:0, UserId:0, SpotTrack:null, SpotArtist:null};
+  @Input() isFavorite: string;
+  jam: Favorites = { Favorite: 0, UserId: 0, SpotTrack: null, SpotArtist: null };
 
   constructor(private spotifyService: SpotifyapiService, private favoritesService: FavoritesService) {
-   }
+  }
 
 
   ngOnInit() {
-    if(this.isFavorite){
-      this.spotifyService.getSongById(this.isFavorite.SpotTrack).subscribe(
+    /*console.log("SONG COMPONENT TEST" + this.isFavorite);*/
+    if (this.isFavorite) {
+      this.spotifyService.getSongById(this.isFavorite).subscribe(
         result => this.song = result,
         error => console.log(error)
       )
@@ -43,12 +44,12 @@ export class SongComponent implements OnInit {
   //Delete a favorite.
   //KS
   deleteJam() {
-    this.favoritesService.deleteJam(this.isFavorite).subscribe(
-      result => {
-        console.log(this.jam);
-      },
-      error => console.log(error)
-    );
+    //this.favoritesService.deleteJam(this.isFavorite).subscribe(
+    //  result => {
+    //    console.log(this.jam);
+    //  },
+    //  error => console.log(error)
+    //);
   }
 
 }

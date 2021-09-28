@@ -11,22 +11,38 @@ import { SpotifyapiService } from '../services/spotifyapi.service';
 export class FavoritesComponent implements OnInit {
 
   @Input() jams: Favorites[];
+  /*@Input() isFavorite: Favorites;*/
 
-  constructor(private favoritesService: FavoritesService, private spotifyService: SpotifyapiService  ) { }
+  constructor(private favoritesService: FavoritesService, private spotifyService: SpotifyapiService) { }
 
   ngOnInit(): void {
+
   }
 
   //Gets the favorites list for a user with a given ID.
   //KS
-  getJam(userPk: number) {
-    this.favoritesService.getJams(userPk).subscribe(
+  //getJam(userPk: number) {
+  //  this.favoritesService.getJams(userPk).subscribe(
+  //    result => {
+  //      this.jams = result;
+  //      console.log(this.jams)
+  //    },
+  //    error => console.log(error)
+  //  );
+  //}
+
+  deleteJam(favorite: number) {
+    console.log("favorite pre delete " + favorite);
+    this.favoritesService.deleteJam(favorite).subscribe(
       result => {
-        this.jams = result;
-        console.log(this.jams)
+        console.log(this.jams);
       },
       error => console.log(error)
     );
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
 }

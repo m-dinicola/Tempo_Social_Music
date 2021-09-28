@@ -1,5 +1,38 @@
 <!--Pair programming AL KS-->
+<form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)">
+
+  Login Name:
+  <input class="form-control" type="text" name="LoginName"
+         required pattern="[a-zA-Z0-9]*"
+         ngModel #login="ngModel" />
+  <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert">
+    <div *ngIf="login.errors?.required">A handle is required.</div>
+    <div *ngIf="login.errors?.pattern">Spaces are not allowed. Please use letters and numbers.</div>
+  </div>
+  <br />
+  FirstName: <input class="first-name" name="FirstName"
+                    required pattern="[a-zA-Z][a-zA-Z ]*"
+                    ngModel #name="ngModel" />
+  <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+    <div *ngIf="name.errors?.required">A first name is required</div>
+    <div *ngIf="name.errors?.pattern">Your first name must begin with a letter, and use only letters.</div>
+  </div>
+  <br>
+  <br>
+  LastName: <input class="last-name" name="LastName" ngModel /><br><br>
+  StreetAddress: <input class="address" name="StreetAddress" ngModel /><br><br>
+  State: <input class="state" name="State" ngModel /><br><br>
+  ZipCode: <input class="zip-code" name="ZipCode" ngModel /><br><br>
+  UserBio: <input class="bio" name="UserBio" ngModel /><br><br>
+
+  <div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
+    <button class="btn-update">Update Profile</button>
+  </div>
+</form>
+
 <p>
-  {{ tempoUser.userBio }}
-  <button class="btn-update" (click)="updateBio(tempoUser.userBio)">Update Bio</button>
+  Bio: {{tempoUser.userBio}}
+  <!--"Bio Works"-->
+  <button class="btn-update" (click)="onSubmit(updateUserForm)" (click)="reloadPage()">Update Profile</button>
 </p>
+
