@@ -21,6 +21,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BioComponent } from './bio/bio.component';
 import { ConnectionComponent } from './connection/connection.component';
+import { SearchpageComponent } from './searchpage/searchpage.component';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { ConnectionComponent } from './connection/connection.component';
     FavoritesComponent,
     ProfileComponent,
     BioComponent,
-    ConnectionComponent
+    ConnectionComponent,
+    SearchpageComponent
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,6 +56,7 @@ import { ConnectionComponent } from './connection/connection.component';
       { path: 'create-user', component: CreateUserComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'favorites', component: FavoritesComponent },
+      { path: 'searchpage', component: SearchpageComponent },
     ])
   ],
   providers: [
