@@ -11,7 +11,7 @@ import { SpotifyapiService } from '../services/spotifyapi.service';
 export class FavoritesComponent implements OnInit {
 
   @Input() jams: Favorites[];
-  @Input() isFavorite: Favorites;
+  /*@Input() isFavorite: Favorites;*/
 
   constructor(private favoritesService: FavoritesService, private spotifyService: SpotifyapiService) { }
 
@@ -21,23 +21,28 @@ export class FavoritesComponent implements OnInit {
 
   //Gets the favorites list for a user with a given ID.
   //KS
-  getJam(userPk: number) {
-    this.favoritesService.getJams(userPk).subscribe(
-      result => {
-        this.jams = result;
-        console.log(this.jams)
-      },
-      error => console.log(error)
-    );
-  }
+  //getJam(userPk: number) {
+  //  this.favoritesService.getJams(userPk).subscribe(
+  //    result => {
+  //      this.jams = result;
+  //      console.log(this.jams)
+  //    },
+  //    error => console.log(error)
+  //  );
+  //}
 
-  deleteJam(favorite: Favorites) {
+  deleteJam(favorite: number) {
+    console.log("favorite pre delete " + favorite);
     this.favoritesService.deleteJam(favorite).subscribe(
       result => {
         console.log(this.jams);
       },
       error => console.log(error)
     );
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
 }

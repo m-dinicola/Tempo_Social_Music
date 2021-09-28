@@ -1,10 +1,15 @@
 
-<ol class="jam">
-  <!--<li> jams.SpotTrack  --> <!--</li>-->
+<ul class="jam">
+  <!--<li> <app-song [isFavorite]="jams[2].spotTrack"></app-song></li>-->
   <li *ngFor="let j of jams">
-    {{ j.spotTrack }} <button class="delete-btn" (click)="deleteJam(j.SpotTrack)">Delete Jam</button> <app-song [isFavorite]="j"></app-song>
-    <app-artist [isFavorite]="j"></app-artist>
+
+    <app-song *ngIf="j.spotTrack" [isFavorite]="j.spotTrack"></app-song>
+    <app-artist *ngIf="j.spotArtist" [isFavorite]="j.spotArtist"></app-artist>
+  <div>
+    <button class="delete-btn" (click)="deleteJam(j.favorite)" (click)="reloadPage()">Delete Jam</button>
+    </div>
+    <br />
 
   </li>
 
-</ol>
+</ul>

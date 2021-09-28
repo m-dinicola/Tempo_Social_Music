@@ -12,7 +12,7 @@ import { Favorites } from '../models/Favorites';
 export class ArtistComponent implements OnInit {
 
   @Input() artist: Artists;
-  @Input() isFavorite: Favorites;
+  @Input() isFavorite: string;
   jam: Favorites = { Favorite: 0, UserId: 0, SpotTrack: null, SpotArtist: null }
 
   constructor(private spotifyService: SpotifyapiService, private favoritesService: FavoritesService) { }
@@ -21,7 +21,7 @@ export class ArtistComponent implements OnInit {
   ngOnInit() {
     console.log(this.isFavorite);
     if (this.isFavorite) {
-      this.spotifyService.getArtistById(this.isFavorite.SpotArtist).subscribe(
+      this.spotifyService.getArtistById(this.isFavorite).subscribe(
         result => this.artist = result,
         error => console.log(error)
       )
@@ -44,12 +44,12 @@ export class ArtistComponent implements OnInit {
   //Delete a favorite.
   //KS
   deleteJam() {
-    this.favoritesService.deleteJam(this.isFavorite).subscribe(
-      result => {
-        console.log(this.jam);
-      },
-      error => console.log(error)
-    );
+    //this.favoritesService.deleteJam(this.isFavorite).subscribe(
+    //  result => {
+    //    console.log(this.jam);
+    //  },
+    //  error => console.log(error)
+    //);
   }
 
 }

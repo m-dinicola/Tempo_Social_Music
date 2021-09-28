@@ -51,4 +51,8 @@ export class TempoDBAPIService {
   getUserBio(bio: string) {
     return this.http.get<TempoUser>(`${this.apiUri}/user`)
   }
+
+  updateProfile(newInfo: TempoUser) {
+    return this.http.put<TempoUser>(`${this.apiUri}/user`, newInfo);
+  }
 }

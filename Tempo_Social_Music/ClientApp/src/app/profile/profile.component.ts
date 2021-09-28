@@ -12,16 +12,18 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 export class ProfileComponent implements OnInit {
 
   activeUser: TempoUser = { userPk: 0, loginName: null, firstName: null, lastName: null, streetAddress: null, state: null, zipCode: null, userBio: null };
-  activeUsersFaves: Favorites[] = [/*{ Favorite: 4, UserId:6, SpotTrack: "7iQmjnDXYngWGsbjVnDc1U", SpotArtist: null }*/];
+  activeUsersFaves: Favorites[];
   activeUserBio: string = "";
   constructor(private tempoDBService: TempoDBAPIService, private favoritesService: FavoritesService) {
   }
 
   ngOnInit(): void {
+    
     this.tempoDBService.getActiveUser().subscribe(
       result => {
         this.activeUser = result;
         this.getJamsList();
+        console.log("USER TEST" + this.activeUser.userPk);
       },
       error => console.log(error)
     );
@@ -31,7 +33,7 @@ export class ProfileComponent implements OnInit {
     this.favoritesService.getJams(this.activeUser.userPk).subscribe(
       result => {
         this.activeUsersFaves = result;
-        console.log(result);
+        console.log("JAMS LIST COMPONENT TEST" + this.activeUsersFaves[0].Favorite);
       },
       error => console.log(error)
     )

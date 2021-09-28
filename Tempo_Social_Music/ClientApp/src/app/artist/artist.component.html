@@ -2,26 +2,9 @@
 
 <div class="artistTile">
   <p> {{ artist.name }} </p>
-<img class="albumArt" src={{artist.images[1].url}} />
-<div *ngIf="!isFavorite">
-  <button class="add-btn" (click)="addJam(artist.id)">That's my Jam!</button>
-  </div>
-  <div *ngIf="isFavorite">
-    <button class="delete-btn" (click)="deleteJam()">Not my Jam</button>
-  </div>
-</div>
-
-
-<link rel="stylesheet" href="artist.component.css">
-
-<div class="artistTile">
-  <p> {{ artist.name }} </p>
   <img class="albumArt" src={{artist.images[1].url}} />
   <div *ngIf="!isFavorite">
     <button class="add-btn" (click)="addJam(artist.id)">That's my Jam!</button>
-  </div>
-  <div *ngIf="isFavorite">
-    <button class="delete-btn" (click)="deleteJam()">Not my Jam</button>
   </div>
 </div>
 
