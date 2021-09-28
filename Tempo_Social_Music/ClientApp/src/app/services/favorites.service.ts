@@ -28,7 +28,7 @@ export class FavoritesService {
   }
 
   //Delete an artist from your favorites list based on the artists ID.
-  deleteJam(favorite: Favorites) {
-    return this.http.delete(`${this.apiUri}/Jams/${favorite.Favorite}`);
+  deleteJam(favorite: number) {
+    return this.http.delete(`${this.apiUri}/Jams/${favorite}`);
   }
 }
