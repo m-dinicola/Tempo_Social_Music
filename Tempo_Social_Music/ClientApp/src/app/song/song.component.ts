@@ -20,7 +20,7 @@ export class SongComponent implements OnInit {
 
 
   ngOnInit() {
-    /*console.log("SONG COMPONENT TEST" + this.isFavorite);*/
+    console.log("SONG COMPONENT TEST" + this.isFavorite);
     if (this.isFavorite) {
       this.spotifyService.getSongById(this.isFavorite).subscribe(
         result => this.song = result,

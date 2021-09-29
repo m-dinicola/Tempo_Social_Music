@@ -1,6 +1,7 @@
+<div *ngIf="song">
 <p> {{ song.name }} </p>
 <img class="albumArt" src={{song.album.images[1].url}} />
 <div *ngIf="!isFavorite">
   <button class="add-btn" (click)="addJam(song.id)">That's my Jam!</button>
 </div>
-
+</div>

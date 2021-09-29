@@ -1,7 +1,7 @@
+import { TempoUser } from './../models/TempoUser';
 import { Component, Input, OnInit } from '@angular/core';
 import { Connection } from '../models/Connection';
 import { TempoDBAPIService } from '../services/tempo-db-api.service';
-import { TempoUser } from '../models/TempoUser';
 
 @Component({
   selector: 'app-connection',
@@ -22,13 +22,30 @@ export class ConnectionComponent implements OnInit {
   };
 
 
-  @Input() connection: Connection;
+  @Input() userNum: number;
+  unumOffload: number;
+  connections: number[];
 
-  constructor(private tempoDBService: TempoDBAPIService) { }
-
-  ngOnInit(): void {
+  constructor(private tempoDBService: TempoDBAPIService) {
   }
 
+  ngOnInit(): void {
+    console.log("Start connection onInit. userNum ="+this.userNum);
+    this.unumOffload = this.userNum;
+    if(this.userNum){
+      this.tempoDBService.getFriends(this.userNum).subscribe(
+        result=>{
+          console.log(`Just got ${result} for userNum=${this.unumOffload} in connection init.`);
+          result.forEach(this.parseConnection);
+        }
+      )
+    }
+  }
+
+  parseConnection(connection:Connection):number{
+    console.log(`Parsing a connection for uNumOffload=${this.unumOffload}.`);
+    return (connection.User1==this.unumOffload)?connection.User1:connection.User2;
+  }
 
   //addUserFriend(userConnect: string) {
   //  this.tempoDBService.addUserFriend(userConnect).subscribe(

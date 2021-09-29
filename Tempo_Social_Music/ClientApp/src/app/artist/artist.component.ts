@@ -19,7 +19,7 @@ export class ArtistComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.isFavorite);
+    console.log("Artist component init "+this.isFavorite);
     if (this.isFavorite) {
       this.spotifyService.getArtistById(this.isFavorite).subscribe(
         result => this.artist = result,
