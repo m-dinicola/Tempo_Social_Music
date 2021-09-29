@@ -1,7 +1,25 @@
-<!--Pair programming AL KS-->
-<form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 
-  Login Name:
+
+<!--Pair programming AL KS, reformatted MH-->
+<!-- <form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)"> -->
+
+  <body>
+    <div class="header" style="margin-bottom:0">
+      <div class="lghead">MIXR</div>
+      <div class="smhead">Find your rythm</div>
+    </div>
+
+  <div class="container">
+    <form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)">
+<!-- Login Name:
   <input class="form-control" type="text" name="LoginName"
          required pattern="[a-zA-Z0-9]*"
          ngModel #login="ngModel" />
@@ -9,30 +27,106 @@
     <div *ngIf="login.errors?.required">A handle is required.</div>
     <div *ngIf="login.errors?.pattern">Spaces are not allowed. Please use letters and numbers.</div>
   </div>
-  <br />
-  FirstName: <input class="first-name" name="FirstName"
+  <br /> -->
+    <div class="row">
+      <div class="col-25">
+        <label for="LoginName">Login</label>
+      </div>
+      <div class="col-75">
+        <input class="form-control" type="text" name="LoginName"
+                         required pattern="[a-zA-Z0-9]*"
+                         ngModel #login="ngModel"/>
+          <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert">
+            <div *ngIf="login.errors?.required">A handle is required.</div>
+            <div *ngIf="login.errors?.pattern">Spaces are not allowed. Please use letters and numbers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FirstName: <input class="first-name" name="FirstName"
                     required pattern="[a-zA-Z][a-zA-Z ]*"
                     ngModel #name="ngModel" />
   <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
     <div *ngIf="name.errors?.required">A first name is required</div>
     <div *ngIf="name.errors?.pattern">Your first name must begin with a letter, and use only letters.</div>
-  </div>
-  <br>
-  <br>
-  LastName: <input class="last-name" name="LastName" ngModel /><br><br>
-  StreetAddress: <input class="address" name="StreetAddress" ngModel /><br><br>
-  State: <input class="state" name="State" ngModel /><br><br>
-  ZipCode: <input class="zip-code" name="ZipCode" ngModel /><br><br>
-  UserBio: <input class="bio" name="UserBio" ngModel /><br><br>
+  </div> -->
 
-  <div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
+    <div class="row">
+      <div class="col-25">
+        <label for="FirstName">First Name</label>
+      </div>
+      <div class="col-75">
+        <input class="first-name" type="text" name="FirstName"
+          required pattern="[a-zA-Z][a-zA-Z ]*"
+         ngModel #name="ngModel"/>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+          <div *ngIf="name.errors?.required">A first name is required</div>
+          <div *ngIf="name.errors?.pattern">Your first name must begin with a letter, and use only letters.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LastName: <input class="last-name" name="LastName" ngModel /><br><br>
+    StreetAddress: <input class="address" name="StreetAddress" ngModel /><br><br>
+    State: <input class="state" name="State" ngModel /><br><br>
+    ZipCode: <input class="zip-code" name="ZipCode" ngModel /><br><br>
+    UserBio: <input class="bio" name="UserBio" ngModel /><br><br> -->
+
+    <div class="row">
+      <div class="col-25">
+        <label for="LastName">Last Name</label>
+      </div>
+      <div class="col-75">
+        <input class="last-name" type="text" name="LastName" ngModel/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="StreetAddress">Street Address</label>
+      </div>
+      <div class="col-75">
+        <input class="address" type="text" name="StreetAddress" ngModel/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="State">State</label>
+      </div>
+      <div class="col-75">
+        <input class="state" type="text" name="State" ngModel/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="ZipCode">Zip Code</label>
+      </div>
+      <div class="col-75">
+        <input class="zip-code" type="text" name="ZipCode" ngModel/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-25">
+        <label for="UserBio">Bio</label>
+      </div>
+      <div class="col-75">
+        <input class="bio" type="text" style="height: 200px;" name="UserBio" ngModel/>
+      </div>
+    </div>
+    </form>
+
+  <!-- <div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
     <button class="btn-update">Update Profile</button>
   </div>
-</form>
+</form> -->
 
 <p>
   Bio: {{tempoUser.userBio}}
   <!--"Bio Works"-->
   <button class="btn-update" (click)="onSubmit(updateUserForm)" (click)="reloadPage()">Update Profile</button>
 </p>
-
+  <!-- </body> -->
+  </html>

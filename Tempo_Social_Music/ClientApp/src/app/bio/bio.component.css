@@ -1,6 +1,14 @@
 body
 {
 
+   background-color: #5D5D5D;
+   text-align: center;
+   justify-content: center;
+   position: absolute;
+   left: 0;
+   right: 0;
+   height: auto;
+  
 }
 
 .btn-update
