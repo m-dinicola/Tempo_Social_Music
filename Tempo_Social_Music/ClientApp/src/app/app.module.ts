@@ -21,7 +21,9 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BioComponent } from './bio/bio.component';
 import { ConnectionComponent } from './connection/connection.component';
+import { SearchpageComponent } from './searchpage/searchpage.component';
 import { MiniJamComponent } from './mini-jam/mini-jam.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +41,10 @@ import { MiniJamComponent } from './mini-jam/mini-jam.component';
     ProfileComponent,
     BioComponent,
     ConnectionComponent,
-    MiniJamComponent
+    MiniJamComponent,
+    ConnectionComponent,
+    SearchpageComponent
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -54,7 +59,8 @@ import { MiniJamComponent } from './mini-jam/mini-jam.component';
       { path: 'create-user', component: CreateUserComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'favorites', component: FavoritesComponent },
-      { path: 'bio', component: BioComponent }
+      { path: 'bio', component: BioComponent },
+      { path: 'searchpage', component: SearchpageComponent }
     ])
   ],
   providers: [
