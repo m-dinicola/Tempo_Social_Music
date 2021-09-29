@@ -10,6 +10,7 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 export class TempoUserComponent implements OnInit {
 
   @Input() tempouser: TempoUser;
+  faveName: string;
 
   constructor(private tempoDBService: TempoDBAPIService) { }
 
@@ -18,6 +19,10 @@ export class TempoUserComponent implements OnInit {
 
     console.log(this.tempouser.loginName);
 
+  }
+
+  displayFave(songName:string):void{
+    this.faveName = songName;
   }
 
 }

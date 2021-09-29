@@ -1,0 +1,12 @@
+<div *ngIf="song">
+  <a href={{ song.href }}><img class="albumArt" src={{song.album.images[2].url}} alt={{song.name}}/></a>
+  <div *ngIf="!isFavorite">
+    <button class="add-btn" (click)="addJam(song.id)">That's my Jam!</button>
+  </div>
+</div>
+<div *ngIf="artist">
+  <a href={{ artist.href }}><img class="albumArt" src={{artist.images[2].url}} alt={{artist.name}}/></a>
+  <div *ngIf="!isFavorite">
+    <button class="add-btn" (click)="addJam(artist.id)">That's my Jam!</button>
+  </div>
+</div>

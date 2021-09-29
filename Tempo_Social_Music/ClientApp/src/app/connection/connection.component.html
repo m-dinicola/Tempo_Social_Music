@@ -2,3 +2,10 @@
 <!--<p>
   <button class="connection-btn" (click)="()">Add a Connection</button>
 </p>-->
+<div *ngIf="userNum">
+<div *ngIf="connections">
+  <div *ngFor="let c of connections">
+    <app-mini-jam [userPk]="c"></app-mini-jam>
+  </div>
+</div>
+</div>
