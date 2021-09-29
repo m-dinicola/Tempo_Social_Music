@@ -70,8 +70,4 @@ export class BioComponent implements OnInit {
     console.log(this.tempoUser);
     this.updateProfile(this.tempoUser);
   }
-
-  reloadPage() {
-    window.location.reload();
-  }
 }
