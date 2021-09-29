@@ -6,12 +6,31 @@ body
   position: absolute;
   left: 0;
   right: 0;
+  background-size: cover;
+
  }
 
 .search-container
 {
-  background-color: #5d5d5d;
-  color:#f7f7f7;
+  background-color: #f7f7f7;
+  color: #f7f7f7;;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: black;
+  text-align: center;
+  width: 75%;
+  height: 600px;
+  padding-top: 200px;
+  box-shadow: 10px 10px 5px #8D08F4;
+  border-radius: 20px;
+  justify-content: center;
+  border: 2px solid #8D08F4;
+  margin: auto;
+}
+
+.search-form
+{
+  background-color: #f7f7f7;
+  color: #8D08F4;
 }
 
 .header
@@ -23,6 +42,9 @@ body
  background-position: center;
  text-align: center;
  background-color: #5D5D5D;
+
+ left: 0;
+ right: 0;
 }
 
 .lghead
@@ -51,8 +73,15 @@ p{
  font-size: 50px;
 }
 
-.search-form
+.extra-box
+{
+  background-color: #5D5D5D;
+  height: 500px;
+  width: auto;
+}
+
+/* .search-form
 {
   background-color: #5d5d5d;
   color:#f7f7f7;
-}
+} */

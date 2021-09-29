@@ -41,7 +41,7 @@ import { MiniJamComponent } from './mini-jam/mini-jam.component';
     ProfileComponent,
     BioComponent,
     ConnectionComponent,
-    MiniJamComponent
+    MiniJamComponent,
     ConnectionComponent,
     SearchpageComponent
 
