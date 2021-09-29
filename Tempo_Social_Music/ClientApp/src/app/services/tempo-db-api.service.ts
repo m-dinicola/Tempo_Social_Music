@@ -1,6 +1,8 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Inject, Injectable } from '@angular/core';
 import { TempoUser } from '../models/TempoUser';
+import { Connection } from '../models/Connection';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +37,11 @@ export class TempoDBAPIService {
   deleteUserFriend(user1: string, user2: string) {
     var message = `${user1}&${user2}`
     return this.http.delete(`${this.apiUri}/deleteUserFriend/${message}`);
+  }
+
+  //Get a list of friends for a given user.
+  getFriends(userNum: number) : Observable<Connection[]>{
+    return this.http.get<Connection[]>(`${this.apiUri}/connections/${userNum}`);
   }
 
   //Create a new user. Link this to ngForm.

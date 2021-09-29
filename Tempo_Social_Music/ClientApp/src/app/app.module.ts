@@ -21,6 +21,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BioComponent } from './bio/bio.component';
 import { ConnectionComponent } from './connection/connection.component';
+import { MiniJamComponent } from './mini-jam/mini-jam.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ConnectionComponent } from './connection/connection.component';
     FavoritesComponent,
     ProfileComponent,
     BioComponent,
-    ConnectionComponent
+    ConnectionComponent,
+    MiniJamComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
