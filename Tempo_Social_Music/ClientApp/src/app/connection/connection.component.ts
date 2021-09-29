@@ -36,16 +36,21 @@ export class ConnectionComponent implements OnInit {
       this.tempoDBService.getFriends(this.userNum).subscribe(
         result=>{
           console.log(`Just got ${result} for userNum=${this.unumOffload} in connection init.`);
-          result.forEach(this.parseConnection);
+          result.forEach(function(x) {
+            this.connection.push(
+              (x.User1==this.userNum)?x.User2:x.User1
+            );
+            console.log(`Just pushed ${this.connections[this.connections.length - 1]} to connections array at position ${this.connections.length - 1}`);
+          });
         }
       )
     }
   }
 
-  parseConnection(connection:Connection):number{
-    console.log(`Parsing a connection for uNumOffload=${this.unumOffload}.`);
-    return (connection.User1==this.unumOffload)?connection.User1:connection.User2;
-  }
+  // parseConnection(connection:Connection):number{
+  //   console.log(`Parsing a connection for uNumOffload=${this.unumOffload}.`);
+  //   return (connection.User1==this.unumOffload)?connection.User1:connection.User2;
+  // }
 
   //addUserFriend(userConnect: string) {
   //  this.tempoDBService.addUserFriend(userConnect).subscribe(
