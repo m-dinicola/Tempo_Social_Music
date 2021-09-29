@@ -40,7 +40,7 @@ export class TempoDBAPIService {
   }
 
   //Get a list of friends for a given user.
-  getFriends(userNum: number) : Observable<Connection[]>{
+  getFriends(userNum: number) {
     return this.http.get<Connection[]>(`${this.apiUri}/connections/${userNum}`);
   }
 
