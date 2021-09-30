@@ -1,6 +1,6 @@
 export interface Recommendation {
-  RecommendationId: number;
-  UserFrom: number;
-  RecSongId: number;
-  UserTo: number;
+  recommendationId: number;
+  userFrom: number;
+  recSongId: number;
+  userTo: number;
 }

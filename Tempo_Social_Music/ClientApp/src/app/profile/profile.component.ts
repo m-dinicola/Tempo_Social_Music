@@ -18,12 +18,12 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.tempoDBService.getActiveUser().subscribe(
       result => {
         this.activeUser = result;
         this.getJamsList();
-        console.log("USER TEST" + this.activeUser.userPk);
+        console.log("USER TEST " + this.activeUser.userPk);
       },
       error => console.log(error)
     );
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
     this.favoritesService.getJams(this.activeUser.userPk).subscribe(
       result => {
         this.activeUsersFaves = result;
-        console.log("JAMS LIST COMPONENT TEST" + this.activeUsersFaves[0].Favorite);
+        console.log("JAMS LIST COMPONENT TEST " + this.activeUsersFaves[0].favorite);
       },
       error => console.log(error)
     )

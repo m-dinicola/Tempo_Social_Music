@@ -1,7 +1,6 @@
-
-<ul class="jam">
+<div class="jam">
   <!--<li> <app-song [isFavorite]="jams[2].spotTrack"></app-song></li>-->
-  <li *ngFor="let j of jams">
+  <div *ngFor="let j of jams">
 
     <app-song *ngIf="j.spotTrack" [isFavorite]="j.spotTrack"></app-song>
     <app-artist *ngIf="j.spotArtist" [isFavorite]="j.spotArtist"></app-artist>
@@ -10,6 +9,5 @@
     </div>
     <br />
 
-  </li>
-
-</ul>
+  </div>
+</div>

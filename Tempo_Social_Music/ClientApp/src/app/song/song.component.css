@@ -1,4 +1,9 @@
 .albumArt
 {
   image-rendering: crisp-edges;
+  width: 100%;
+}
+
+.songBox {
+  width: inherit;
 }

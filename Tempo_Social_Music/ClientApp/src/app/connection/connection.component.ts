@@ -44,7 +44,7 @@ export class ConnectionComponent implements OnInit {
 
   parseConnection(connection:Connection):number{
     console.log(`Parsing a connection for uNumOffload=${this.unumOffload}.`);
-    return (connection.User1==this.unumOffload)?connection.User1:connection.User2;
+    return (connection.user1==this.unumOffload)?connection.user1:connection.user2;
   }
 
   //addUserFriend(userConnect: string) {

@@ -16,7 +16,7 @@ export class MiniJamComponent implements OnInit {
   @Input() song: Song;
   @Input() artist: Artists;
   @Input() isFavorite: string;
-  jam: Favorites = { Favorite: 0, UserId: 0, SpotTrack: null, SpotArtist: null };
+  jam: Favorites = { favorite: 0, userId: 0, spotTrack: null, spotArtist: null };
   @Output() faveSet = new EventEmitter();
   constructor(private favoritesService: FavoritesService, private spotifyService:SpotifyapiService) { }
 
@@ -29,13 +29,14 @@ export class MiniJamComponent implements OnInit {
           {
             console.log(`onInit userPk!=0, faves.length > 0, getting random track from faves.`)
             var rand:number = this.getRandomUnder(result.length);
-            if(result[rand].SpotTrack){
+            console.log(`Chose favorite ${result[rand].favorite}.`)
+            if(result[rand].spotTrack){
               console.log(`Fave ${rand} was a song.`);
-              this.getSong(result[rand].SpotTrack);
+              this.getSong(result[rand].spotTrack);
             }
             else{
               console.log(`Fave ${rand} was an artist.`);
-              this.getArtist(result[rand].SpotArtist);
+              this.getArtist(result[rand].spotArtist);
             }
           }
         }
@@ -54,7 +55,7 @@ export class MiniJamComponent implements OnInit {
   //Adds a favorite to the current user's favorite list.
   //KS
   addJam(jamId: string) {
-    this.jam.SpotTrack = jamId;
+    this.jam.spotTrack = jamId;
     this.favoritesService.addJam(this.jam).subscribe(
       result => {
         console.log(this.jam);
@@ -68,7 +69,7 @@ export class MiniJamComponent implements OnInit {
   }
 
   isSongFave(favorite:Favorites):boolean{
-    return !!favorite.SpotTrack;
+    return !!favorite.spotTrack;
   }
 
   getArtist(artistId:string):void{

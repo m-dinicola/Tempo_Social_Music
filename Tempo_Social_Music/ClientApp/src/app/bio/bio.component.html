@@ -15,13 +15,12 @@
 
 
   <div class="header" style="margin-bottom:0">
-      <div class="lghead">MIXR</div>
-      <div class="smhead">Find your rythm</div>
+      <div class="lghead">MIXR Profile</div>
+      <div class="smhead">You've got taste</div>
   </div>
 
-
-  <body>
   <div class="container">
+    <h2>Update your profile:</h2>
     <form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)">
 <!-- Login Name:
   <input class="form-control" type="text" name="LoginName"
@@ -127,10 +126,10 @@
   </div>
 </form> -->
 
-<p>
-  Bio: {{tempoUser.userBio}}
-  <!--"Bio Works"-->
-  <button class="btn-update" (click)="onSubmit(updateUserForm)" (click)="reloadPage()">Update Profile</button>
-</p>
-
+  <p>
+    Bio: {{tempoUser.userBio}}
+    <!--"Bio Works"-->
+    <button class="btn-update" (click)="onSubmit(updateUserForm)" (click)="reloadPage()">Update Profile</button>
+  </p>
+</div>
 
