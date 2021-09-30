@@ -2,7 +2,12 @@
 @using Tempo_Social_Music.Models;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+<link rel="stylesheet" href="app.css" type="text/css" />
 
+<div class="header">
+    <div class="lghead">MIXR</div>
+    <div class="smhead">Find your rythm</div>
+</div>
 @{
     string returnUrl = null;
     var query = ViewContext.HttpContext.Request.Query;

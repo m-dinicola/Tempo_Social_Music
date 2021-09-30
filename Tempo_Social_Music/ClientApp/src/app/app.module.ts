@@ -22,7 +22,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BioComponent } from './bio/bio.component';
 import { ConnectionComponent } from './connection/connection.component';
 import { SearchpageComponent } from './searchpage/searchpage.component';
-import { MiniJamComponent } from './mini-jam/mini-jam.component';
+import { MiniJamComponent } from './mini-jam/mini-jam.component'
 
 
 @NgModule({
