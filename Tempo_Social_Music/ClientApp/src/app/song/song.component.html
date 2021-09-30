@@ -1,4 +1,4 @@
-<div *ngIf="song">
+<div class="songBox" *ngIf="song">
 <p> {{ song.name }} </p>
 <img class="albumArt" src={{song.album.images[1].url}} />
 <div *ngIf="!isFavorite">

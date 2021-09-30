@@ -13,7 +13,7 @@ export class ArtistComponent implements OnInit {
 
   @Input() artist: Artists;
   @Input() isFavorite: string;
-  jam: Favorites = { Favorite: 0, UserId: 0, SpotTrack: null, SpotArtist: null }
+  jam: Favorites = { favorite: 0, userId: 0, spotTrack: null, spotArtist: null }
 
   constructor(private spotifyService: SpotifyapiService, private favoritesService: FavoritesService) { }
 
@@ -32,7 +32,7 @@ export class ArtistComponent implements OnInit {
   //Adds a favorite to the current user's favorite list.
   //KS
   addJam(jamId: string) {
-    this.jam.SpotArtist = jamId;
+    this.jam.spotArtist = jamId;
     this.favoritesService.addJam(this.jam).subscribe(
       result => {
         console.log(this.jam);

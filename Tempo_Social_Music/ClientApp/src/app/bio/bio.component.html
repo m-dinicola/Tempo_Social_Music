@@ -13,14 +13,13 @@
 <!-- <form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)"> -->
 
 
-<div class="header" style="margin-bottom:0">
-  <div class="lghead">MIXR</div>
-  <div class="smhead">Find your rythm</div>
-</div>
+  <div class="header" style="margin-bottom:0">
+      <div class="lghead">MIXR Profile</div>
+      <div class="smhead">You've got taste</div>
+  </div>
 
-
-<body>
   <div class="container">
+    <h2>Update your profile:</h2>
     <form class="update-user-form" #updateUserForm="ngForm" (ngSubmit)="onSubmit(updateUserForm)">
       <!-- Login Name:
         <input class="form-control" type="text" name="LoginName"
@@ -112,26 +111,25 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-25">
-      <label for="UserBio">Bio</label>
+    <div class="row">
+      <div class="col-25">
+        <label for="UserBio">Bio</label>
+      </div>
+      <div class="col-75">
+        <input class="bio" type="text" style="height: 200px;" name="UserBio" ngModel/>
+      </div>
     </div>
-    <div class="col-75">
-      <input class="bio" type="text" style="height: 200px;" name="UserBio" ngModel />
-    </div>
+    </form>
+
+  <!-- <div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
+    <button class="btn-update">Update Profile</button>
   </div>
-  <!--</form>
-<div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
-      <button class="btn-update">Update Profile</button>
-    </div>
-  </form>-->
-  </form>
-    </div>
+</form> -->
+
   <p>
     Bio: {{tempoUser.userBio}}
     <!--"Bio Works"-->
     <button class="btn-update" (click)="onSubmit(updateUserForm)" (click)="reloadPage()">Update Profile</button>
   </p>
-
-</body>
+</div>
 

@@ -1,6 +1,6 @@
 export interface Connection {
-  ConnectionId: number;
-  MatchValue: number;
-  User1: number;
-  User2: number;
+  connectionId: number;
+  matchValue: number;
+  user1: number;
+  user2: number;
 }

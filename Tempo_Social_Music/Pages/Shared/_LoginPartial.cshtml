@@ -3,6 +3,11 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
+<div class="header">
+    <div class="lghead">MIXR</div>
+    <div class="smhead">Find your rythm</div>
+</div>
 @{
     string returnUrl = null;
     var query = ViewContext.HttpContext.Request.Query;

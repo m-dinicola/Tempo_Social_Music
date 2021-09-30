@@ -8,7 +8,7 @@ import { Song } from '../models/Song';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-searchpage',
   templateUrl: './searchpage.component.html',
   styleUrls: ['./searchpage.component.css']
 })
