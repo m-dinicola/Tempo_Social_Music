@@ -11,7 +11,7 @@
 </head>
 
 
-  <body>
+  <div class="homepage">
     <div class="header">
       <div class="lghead">MIXR</div>
       <div class="smhead">Find your rythm</div>
@@ -24,14 +24,15 @@
       </div>
 
 
-    <div class="flex-container">
-      <div>  <button type="button" class="collapsible">Join!</button>
-        <div class="createuser">
+    <div class="row">
+      <div class="column">
+        <button type="button" class="collapsible">Join!</button>
+        <div class="container">
           <app-create-user></app-create-user>
         </div>
       </div>
-    <div>
-    <button type="button" class="collapsible">Search!</button>
+    <div class="column">
+      <button type="button" class="collapsible">Search!</button>
         <div class="container">
           <app-search></app-search>
         </div>
@@ -40,5 +41,16 @@
   </div>
 
 
-</body>
+
+
+  <!-- <button type="button" class="collapsible">Join Now!</button>
+    <div class="createuser">
+      <app-create-user></app-create-user>
+    </div>
+
+  <button type="button" class="collapsible">Search!</button>
+      <div class="container">
+        <app-search></app-search>
+      </div> -->
+</div>
 </html>
