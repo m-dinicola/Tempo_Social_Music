@@ -4,6 +4,6 @@
 
 <div> {{tempouser.firstName}} likes {{faveName}}, check it out!</div>
 <div>
-<app-mini-jam (faveSet)='displayFave($event)'></app-mini-jam>
+<app-mini-jam (faveSet)='displayFave($event)' [userPk]='tempouser.userPk'></app-mini-jam>
 </div>
 </div>

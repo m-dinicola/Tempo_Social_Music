@@ -1,37 +1,35 @@
 <link rel="stylesheet" href="search.component.css">
 
-    <div class="search-container">
-<form class="search-form" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
-  <div class="dropMenu">
-    <label for="category">Select</label>
-    <select id="category" name="category" ngModel class="dropMenu">
-      Search by:
-      <option value="1">Song</option>
-      <option value="2">Artist</option>
-      <option value="3">User</option>
-    </select>
+
+<div class="search-container">
+  <form class="search-form" #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)">
+    <div class="dropMenu">
+      <label for="category">Select</label>
+      <select id="category" name="category" ngModel class="dropMenu">
+        Search by:
+        <option value="1">Song</option>
+        <option value="2">Artist</option>
+        <option value="3">User</option>
+      </select>
+    </div>
+    <br>
+    <input class="search-input" name="search" ngModel />
+
+    <button class="btn-search">Search</button>
+  </form>
+
+  <div *ngIf="songSearch">
+    <app-song [song]="songSearch">   </app-song>
   </div>
-  <br>
-  <input class="search-input" name="search" ngModel />
 
-  <button class="btn-search">Search</button>
-</form>
+  <div *ngIf="artistSearch">
+    <app-artist [artist]="artistSearch">   </app-artist>
+  </div>
 
-<div *ngIf="songSearch">
+  <div *ngIf="userSearch">
+    <app-tempo-user [tempouser]="userSearch">   </app-tempo-user>
+    <button class="btn-add">Add Connection</button>
+  </div>
 
-  <app-song [song]="songSearch">   </app-song>
 </div>
-
-<div *ngIf="artistSearch">
-
-  <app-artist [artist]="artistSearch">   </app-artist>
-</div>
-
-<div *ngIf="userSearch">
-
-  <app-tempo-user [tempouser]="userSearch">   </app-tempo-user>
-  <button class="btn-add">Add Connection</button>
-</div>
-</div>
-
 
