@@ -31,7 +31,7 @@
           <div *ngIf="login.errors?.pattern">Spaces are not allowed. Please use letters and numbers.</div>
         </div>
         <br /> -->
-  
+
   <div class="row">
     <div class="col-25">
       <label for="LoginName">Login</label>
@@ -121,7 +121,7 @@
     </div>
   </div>
   <!--</form>
-  <!--<div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
+<div *ngIf="(!login.errors) && (!name.errors) && (login.dirty||login.touched) && (name.dirty||name.touched)">
       <button class="btn-update">Update Profile</button>
     </div>
   </form>-->
@@ -132,6 +132,6 @@
     <!--"Bio Works"-->
     <button class="btn-update" (click)="onSubmit(updateUserForm)" (click)="reloadPage()">Update Profile</button>
   </p>
-  
+
 </body>
 

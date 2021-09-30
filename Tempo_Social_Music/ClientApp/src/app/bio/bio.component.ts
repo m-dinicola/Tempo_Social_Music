@@ -12,7 +12,7 @@ import { TempoDBAPIService } from '../services/tempo-db-api.service';
 })
 export class BioComponent implements OnInit {
 
-  
+
   userBio: string = "this property is a test";
   @Input() tempoUser: TempoUser = {
     userPk: 0,
@@ -69,5 +69,9 @@ export class BioComponent implements OnInit {
     this.tempoUser = form.form.value;
     console.log(this.tempoUser);
     this.updateProfile(this.tempoUser);
+  }
+
+  reloadPage(){
+    window.location.reload();
   }
 }
