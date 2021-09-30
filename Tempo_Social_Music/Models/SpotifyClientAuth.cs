@@ -24,7 +24,9 @@ namespace Tempo_Social_Music.Models
         private async Task SetTokenAsync()
         {
             string uriEndpoint = "https://accounts.spotify.com/api/token";
-            string authorizationString = Convert.ToBase64String(Encoding.UTF8.GetBytes(_keys.ClientID + ":" + _keys.ClientSecret));
+            //string authorizationString = Convert.ToBase64String(Encoding.UTF8.GetBytes(_keys.ClientID + ":" + _keys.ClientSecret));
+
+            string authorizationString = Convert.ToBase64String(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SpotClientID") + ":" + Environment.GetEnvironmentVariable("SpotSecret")));
 
             List<KeyValuePair<string, string>> arguments = new List<KeyValuePair<string, string>>
             {
@@ -51,7 +53,8 @@ namespace Tempo_Social_Music.Models
 
         private bool IsExpiredOrEmpty()
         {
-            return (_token is null)||(string.IsNullOrEmpty(_token.access_token)) || (DateTime.UtcNow > ValidTo) || (_token.token_type.ToLower() != "bearer");
+            return (_token is null) || (string.IsNullOrEmpty(_token.access_token)) || (DateTime.UtcNow > ValidTo) || (_token.token_type.ToLower() != "bearer");
         }
     }
 }
+
