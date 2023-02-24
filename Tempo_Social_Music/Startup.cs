@@ -81,9 +81,9 @@ namespace Tempo_Social_Music
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            if (!env.IsDevelopment())
+            //if (!env.IsDevelopment())
             {
-                app.UseSpaStaticFiles();
+                //app.UseSpaStaticFiles();
             }
 
             app.UseRouting();

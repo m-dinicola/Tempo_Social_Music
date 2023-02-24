@@ -23,7 +23,7 @@ namespace Tempo_Social_Music
 {
     //var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
     //config.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
+    
 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
